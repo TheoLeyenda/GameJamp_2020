@@ -10,6 +10,14 @@ public class Platform : MonoBehaviour
     private float actualTime;
     public float loopTimeMovment;
     public float speedMovement;
+    public MovementType movementType;
+
+
+    public enum MovementType
+    {
+        Horizontal, 
+        Vertical,
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +29,20 @@ public class Platform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.Move();
+        switch (movementType)
+        {
+            case MovementType.Horizontal:
+                MoveHorizontal();
+                break;
+            case MovementType.Vertical:
+                MoveVertical();
+                break;
+        }
+
     }
 
 
-    private void Move()
+    private void MoveHorizontal()
     {
         if (actualTime > loopTimeMovment)
         {
@@ -36,6 +53,25 @@ public class Platform : MonoBehaviour
         {
             actualTime++;
             movePlatformLateralRight();
+        };
+        if (actualTime > (loopTimeMovment * 2))
+        {
+            actualTime = 0;
+        }
+    }
+
+
+    private void MoveVertical()
+    {
+        if (actualTime > loopTimeMovment)
+        {
+            actualTime++;
+            movePlataformUp();
+        }
+        else
+        {
+            actualTime++;
+            movePlatformDown();
         };
         if (actualTime > (loopTimeMovment * 2))
         {
@@ -69,6 +105,16 @@ public class Platform : MonoBehaviour
         this.transform.position = this.transform.position - new Vector3(speedMovement, 0, 0) * Time.deltaTime;
     }
 
+
+    void movePlataformUp()
+    {
+        this.transform.position = this.transform.position + new Vector3(0, speedMovement, 0) * Time.deltaTime;
+    }
+
+    void movePlatformDown()
+    {
+        this.transform.position = this.transform.position - new Vector3(0, speedMovement, 0) * Time.deltaTime;
+    }
 }
 
 
