@@ -22,7 +22,7 @@ public class Player : Characther
     public int lifeSlowlySpeed;
 
     public TypeMovement typeMovement;
-    private Rigidbody2D rig2D;
+    
     private StateMovement stateMovement;
     public enum TypeMovement
     {
@@ -36,10 +36,6 @@ public class Player : Characther
         SlowlyMovement,//Movimiento Despacio.
 
     }
-    void Start()
-    {
-        rig2D = GetComponent<Rigidbody2D>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -49,6 +45,7 @@ public class Player : Characther
     }
     public void CheckDie()
     {
+        CheckDead();
         if (die)
         {
             gameObject.SetActive(false);
