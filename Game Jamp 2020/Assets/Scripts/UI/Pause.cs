@@ -7,16 +7,20 @@ public class Pause : MonoBehaviour
 {
     public GameObject Go_pause;
     private bool pause;
+
+    public AudioSource select;
+
     private void Start()
     {
-        pause = false;
+        pause = true;
         Time.timeScale = 1;
     }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //Debug.Log("Pausa");
+            Debug.Log("Pausa");
             pause = !pause;
             if (pause)
             {
@@ -34,7 +38,6 @@ public class Pause : MonoBehaviour
 
     public void action_continue()
     {
-        //Vuelve al juego
         Go_pause.SetActive(false);
         Time.timeScale = 1;
     }

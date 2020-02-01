@@ -5,26 +5,42 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
+    public Canvas canvas_menu ;
+    public Canvas canvas_credits;
+
+    private void Awake()
+    {
+        canvas_menu = canvas_menu.GetComponent<Canvas>();
+        canvas_credits = canvas_credits.GetComponent<Canvas>();
+
+        canvas_menu.enabled = true;
+        canvas_credits.enabled = false;
+    }
+
     public void start_game()
     {
-        Debug.Log("Empeze el juego");
         load_screen("Game_screen");
 
     }
     public void credits_screen()
     {
-        Debug.Log("Mira quien carajo hizo el juego");
-        load_screen("FG_Credits_Screen");
+        Debug.Log("asd");
+        canvas_menu.enabled = false;
+        canvas_credits.enabled = true;
     }
     public void exit_game()
     {
-        Debug.Log("Me rajo de esta mierda");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
       Application.Quit();
 #endif
 
+    }
+    public void menu_screen()
+    {
+        canvas_menu.enabled = true;
+        canvas_credits.enabled = false;
     }
 
     private void load_screen(string juego)
