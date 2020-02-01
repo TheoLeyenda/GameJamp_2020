@@ -8,8 +8,6 @@ public class Pause : MonoBehaviour
     public GameObject Go_pause;
     private bool pause;
 
-    public AudioSource select;
-
     private void Start()
     {
         pause = true;
@@ -38,6 +36,7 @@ public class Pause : MonoBehaviour
 
     public void action_continue()
     {
+        pause = !pause;
         Go_pause.SetActive(false);
         Time.timeScale = 1;
     }

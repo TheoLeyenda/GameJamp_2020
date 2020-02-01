@@ -24,7 +24,6 @@ public class Menu : MonoBehaviour
     }
     public void credits_screen()
     {
-        Debug.Log("asd");
         canvas_menu.enabled = false;
         canvas_credits.enabled = true;
     }

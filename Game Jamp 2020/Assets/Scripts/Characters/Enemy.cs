@@ -77,7 +77,7 @@ public class Enemy : Characther
     {
         if (collision.gameObject.tag == "Player")
         {
-
+            player.life--;
         }
     }
 }
