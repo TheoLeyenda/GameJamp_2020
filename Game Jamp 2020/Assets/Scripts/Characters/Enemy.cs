@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : Characther
 {
     // Start is called before the first frame update
-    public int Damage;
+    public float Damage;
     public float RangeOfVision;
     public float distanceAttack;
     public float distanceChase;

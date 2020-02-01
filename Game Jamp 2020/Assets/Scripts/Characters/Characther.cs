@@ -7,7 +7,7 @@ public class Characther : MonoBehaviour
     public float speedMovement;
     protected float auxSpeedMovement;
     public float speedJump;
-    public int life;
+    public float life;
     protected bool inFloor;
     protected bool die;
     [HideInInspector]
