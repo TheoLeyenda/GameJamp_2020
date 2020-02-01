@@ -203,6 +203,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &700873024
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5799395412055672692, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_Name
+      value: PAUSA
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.503529
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.4329083
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -215.58203
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395412055672695, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395413089625140, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799395413700890107, guid: 35241c8e70bc71a428273e5a0dd64dc4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 35241c8e70bc71a428273e5a0dd64dc4, type: 3}
 --- !u!1 &830052028
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +362,7 @@ GameObject:
   - component: {fileID: 830419135}
   - component: {fileID: 830419134}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Canvas_game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -545,8 +624,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 35
@@ -688,6 +765,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shoker
       objectReference: {fileID: 0}
+    - target: {fileID: 5243459508274458819, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5243459508274458819, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.20123056
+      objectReference: {fileID: 0}
+    - target: {fileID: 5243459508274458819, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5243459508274458820, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -741,21 +833,6 @@ PrefabInstance:
     - target: {fileID: 5243459508274458820, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5243459508274458819, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5243459508274458819, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.20123056
-      objectReference: {fileID: 0}
-    - target: {fileID: 5243459508274458819, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
-        type: 3}
-      propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -880,8 +957,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &2026880657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -900,8 +975,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0

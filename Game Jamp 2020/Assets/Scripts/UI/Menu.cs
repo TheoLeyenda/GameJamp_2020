@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-
     public void start_game()
     {
         Debug.Log("Empeze el juego");
