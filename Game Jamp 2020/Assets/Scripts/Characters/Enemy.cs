@@ -15,7 +15,7 @@ public class Enemy : Characther
     public bool enableMovement = true;
     protected bool normalMovement = true;
     protected bool checkDirection = true;
-    protected float distaceY = 0.5f;
+    public float distaceY = 0.5f;
     protected FSM fsm;
     protected Player player;
     protected Vector2 DistanceVector;
@@ -48,10 +48,10 @@ public class Enemy : Characther
             switch (stateMovement)
             {
                 case StateMovement.Left:
-                    LeftMovement();
+                    LeftMovement(false);
                     break;
                 case StateMovement.Right:
-                    RightMovement();
+                    RightMovement(false);
                     break;
                 case StateMovement.Jump:
                     if (stateMovement == StateMovement.Left)
@@ -109,7 +109,6 @@ public class Enemy : Characther
             case StateMovement.Right:
                 stateMovement = StateMovement.Left;
                 break;
-            player.life--;
         }
         timeMovement = auxTimeMovement;
     }

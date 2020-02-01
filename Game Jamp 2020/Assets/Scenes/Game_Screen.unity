@@ -484,8 +484,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863966360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.46, y: -4.44, z: 0}
-  m_LocalScale: {x: 60.23566, y: 3.5, z: 1}
+  m_LocalPosition: {x: 3.272, y: -4.44, z: 0}
+  m_LocalScale: {x: 113.17606, y: 3.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -670,7 +670,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144645251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.937, y: -0.29, z: 0}
+  m_LocalPosition: {x: 10.21, y: -0.29, z: 0}
   m_LocalScale: {x: 26.335152, y: 3.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -905,7 +905,7 @@ PrefabInstance:
     - target: {fileID: 3108214362128805396, guid: 5cb800a9b5a408d49b9950cf26318f37,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.65
+      value: 7.623
       objectReference: {fileID: 0}
     - target: {fileID: 3108214362128805396, guid: 5cb800a9b5a408d49b9950cf26318f37,
         type: 3}
@@ -956,6 +956,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7198470581302566610, guid: 5cb800a9b5a408d49b9950cf26318f37,
+        type: 3}
+      propertyPath: distanceChase
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7198470581302566610, guid: 5cb800a9b5a408d49b9950cf26318f37,
+        type: 3}
+      propertyPath: RunVelocity
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7198470581302566610, guid: 5cb800a9b5a408d49b9950cf26318f37,
+        type: 3}
+      propertyPath: distaceY
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7198470581302566610, guid: 5cb800a9b5a408d49b9950cf26318f37,
+        type: 3}
+      propertyPath: timeMovement
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7198470581302566610, guid: 5cb800a9b5a408d49b9950cf26318f37,
+        type: 3}
+      propertyPath: auxTimeMovement
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cb800a9b5a408d49b9950cf26318f37, type: 3}

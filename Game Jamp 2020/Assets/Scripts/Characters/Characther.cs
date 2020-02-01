@@ -12,6 +12,7 @@ public class Characther : MonoBehaviour
     protected bool die;
     [HideInInspector]
     public Rigidbody2D rig2D;
+    public float RunVelocity;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,14 +28,24 @@ public class Characther : MonoBehaviour
             die = true;
         }
     }
-    public void LeftMovement()
+    public void LeftMovement(bool runMovement)
     {
-        transform.position = transform.position - new Vector3(speedMovement, 0, 0) * Time.deltaTime;
+        float speed = speedMovement;
+        if (runMovement)
+        {
+            speed = RunVelocity;
+        }
+        transform.position = transform.position - new Vector3(speed, 0, 0) * Time.deltaTime;
         transform.eulerAngles = new Vector3(0, 180, 0);
     }
-    public void RightMovement()
+    public void RightMovement(bool runMovement)
     {
-        transform.position = transform.position + new Vector3(speedMovement, 0, 0) * Time.deltaTime;
+        float speed = speedMovement;
+        if (runMovement)
+        {
+            speed = RunVelocity;
+        }
+        transform.position = transform.position + new Vector3(speed, 0, 0) * Time.deltaTime;
         transform.eulerAngles = new Vector3(0, 0, 0);
     }
     public virtual void Attack(){ }

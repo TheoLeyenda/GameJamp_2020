@@ -96,7 +96,7 @@ public class Player : Characther
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
-                    RightMovement();
+                    RightMovement(false);
 
                 }
                 //Debug.Log("right");
@@ -109,7 +109,7 @@ public class Player : Characther
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
-                    LeftMovement();
+                    LeftMovement(false);
                 }
                 //Debug.Log("left");
             }

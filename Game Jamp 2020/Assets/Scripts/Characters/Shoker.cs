@@ -61,6 +61,7 @@ public class Shoker : Enemy
                 break;
             case (int)States.Chase:
                 checkDirection = false;
+                
                 //Debug.Log("Chase");
                 Chase();
                 break;
@@ -84,22 +85,20 @@ public class Shoker : Enemy
     {
         if (player.transform.position.x < transform.position.x)
         {
-            LeftMovement();
+            LeftMovement(true);
         }
         else if (player.transform.position.x > transform.position.x)
         {
-            RightMovement();
+            RightMovement(true);
         }
         if (Mathf.Abs((transform.position.x - player.transform.position.x)) <= distanceAttack && Mathf.Abs((transform.position.y - player.transform.position.y)) <= distaceY)
         {
             fsm.SendEvent((int)Events.InRangeStunt);
         }
-        else if(Mathf.Abs((transform.position.x - player.transform.position.x)) > distanceChase)
+        else if(Mathf.Abs((transform.position.x - player.transform.position.x)) > distanceChase || Mathf.Abs((transform.position.y - player.transform.position.y)) > distaceY)
         {
             fsm.SendEvent((int)Events.outTriggerplayer);
         }
-       
-        
     }
    
     private void OnTriggerExit2D(Collider2D collision)
