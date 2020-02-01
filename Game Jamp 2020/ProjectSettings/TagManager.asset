@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - LateralMovement
+  - Trap
   layers:
   - Default
   - TransparentFX
