@@ -2,28 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Platform : PlatformMovement
+public class Platform : MonoBehaviour
 {
     private Rigidbody2D rig2D;
-    public PlatformMovement PlatformMovement;
-    private GameObject player;
-    private GameObject platformChild;
-    private float actualTime;
-
     [Header("Tipo de movimiento")]
-    public PlatformMovement movement;
+    private GameObject player;
+    private float actualTime;
+    public float loopTimeMovment;
+    public float speedMovement;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        platformChild = GameObject.FindWithTag("Floor");
         actualTime = 0;
-    }
+}
 
     // Update is called once per frame
     void Update()
     {
-        if(actualTime> loopTimeMovement)
+        this.Move();
+    }
+
+
+    private void Move()
+    {
+        if (actualTime > loopTimeMovment)
         {
             actualTime++;
             movePlatformLateralLeft();
@@ -33,24 +37,11 @@ public class Platform : PlatformMovement
             actualTime++;
             movePlatformLateralRight();
         };
-        if (actualTime > (loopTimeMovement*2))
+        if (actualTime > (loopTimeMovment * 2))
         {
             actualTime = 0;
         }
-        
-
     }
-
-    void movePlatformLateralRight()
-    {
-        platformChild.transform.position = platformChild.transform.position + new Vector3(speedMovement, 0, 0) * Time.deltaTime;
-    }
-
-    void movePlatformLateralLeft()
-    {
-        platformChild.transform.position = platformChild.transform.position - new Vector3(speedMovement, 0, 0) * Time.deltaTime;
-    }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -67,6 +58,17 @@ public class Platform : PlatformMovement
         Debug.Log("Salio");
         player.transform.parent = null;
     }
+
+    void movePlatformLateralRight()
+    {
+        this.transform.position = this.transform.position + new Vector3(speedMovement, 0, 0) * Time.deltaTime;
+    }
+
+    void movePlatformLateralLeft()
+    {
+        this.transform.position = this.transform.position - new Vector3(speedMovement, 0, 0) * Time.deltaTime;
+    }
+
 }
 
 
