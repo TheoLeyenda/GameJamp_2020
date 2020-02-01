@@ -79,7 +79,7 @@ public class Platform : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2d(Collision2D collision)
     {
 
         if (collision.gameObject.tag == "Player")
