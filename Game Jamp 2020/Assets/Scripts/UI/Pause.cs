@@ -1,85 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
-    GameObject[] botones_pausa;
+    public GameObject Go_pause;
+    private bool pause;
 
-    void Start()
+    private void Start()
     {
+        pause = true;
         Time.timeScale = 1;
-        botones_pausa = GameObject.FindGameObjectsWithTag("Mostrar_en_pausa");
-        esconder_botones();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
-
-        //Pausa o resume el juego con la "P"
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Time.timeScale == 1)
+            Debug.Log("Pausa");
+            pause = !pause;
+            if (pause)
             {
-                Debug.Log("Detener");
-                Time.timeScale = 0;
-                mostrar_botones();
-            }
-            else if (Time.timeScale == 0)
-            {
-                Debug.Log("Continuar");
                 Time.timeScale = 1;
-                esconder_botones();
+                Go_pause.SetActive(false);
+            }
+            else
+            {
+                Time.timeScale = 0;
+                Go_pause.SetActive(true);
             }
         }
+
     }
 
-
-    public void reiniciar()
+    public void action_continue()
     {
-        //Reiniciar el nivel
+        pause = !pause;
+        Go_pause.SetActive(false);
+        Time.timeScale = 1;
     }
 
-    //Chequeo de pausa
-    public void chequear_pausa()
+    public void main_menu()
     {
-        if (Time.timeScale == 1)
-        {
-            Time.timeScale = 0;
-            mostrar_botones();
-        }
-        else if (Time.timeScale == 0)
-        {
-            Time.timeScale = 1;
-            esconder_botones();
-        }
+        Go_pause.SetActive(false);
+        SceneManager.LoadScene("FG_Main_screen");
     }
-
-    //Muestra los botones si es que esta en pausa
-    public void mostrar_botones()
-    {
-        foreach (GameObject g in botones_pausa)
-        {
-            g.SetActive(true);
-        }
-    }
-
-    //Oculta los botones
-    public void esconder_botones()
-    {
-        foreach (GameObject g in botones_pausa)
-        {
-            g.SetActive(false);
-        }
-    }
-
-    //Carga el nivel
-    public void cargar_nivel(string nivel)
-    {
-       //Carga el nivel
-    }
-
-
 
 }

@@ -109,6 +109,7 @@ public class Enemy : Characther
             case StateMovement.Right:
                 stateMovement = StateMovement.Left;
                 break;
+            player.life--;
         }
         timeMovement = auxTimeMovement;
     }

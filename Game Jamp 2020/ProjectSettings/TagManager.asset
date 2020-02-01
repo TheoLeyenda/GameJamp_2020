@@ -4,7 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - botones_menu
+  - Floor
+  - LateralMovement
+  - Trap
   layers:
   - Default
   - TransparentFX

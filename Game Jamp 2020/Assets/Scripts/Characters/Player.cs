@@ -203,4 +203,8 @@ public class Player : Characther
         }
     }
 
+    public void killPlayer()
+    {
+        die = true;
+    }
 }
