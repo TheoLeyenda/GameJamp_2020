@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Floor
+  - botones_menu
   layers:
   - Default
   - TransparentFX
