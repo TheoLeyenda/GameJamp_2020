@@ -9,13 +9,13 @@ public class Menu : MonoBehaviour
     public void start_game()
     {
         Debug.Log("Empeze el juego");
-        cargar_pantalla("Game_screen");
+        load_screen("Game_screen");
 
     }
     public void credits_screen()
     {
         Debug.Log("Mira quien carajo hizo el juego");
-        cargar_pantalla("FG_Credits_Screen");
+        load_screen("FG_Credits_Screen");
     }
     public void exit_game()
     {
@@ -28,7 +28,7 @@ public class Menu : MonoBehaviour
 
     }
 
-    private void cargar_pantalla(string juego)
+    private void load_screen(string juego)
     {
         SceneManager.LoadScene(juego);
     }

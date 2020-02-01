@@ -4,82 +4,32 @@ using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
-    GameObject[] botones_pausa;
+    public GameObject pause;
 
     void Start()
     {
-        Time.timeScale = 1;
-        botones_pausa = GameObject.FindGameObjectsWithTag("Mostrar_en_pausa");
-        esconder_botones();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void action_continue()
     {
-
-        //Pausa o resume el juego con la "P"
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (Time.timeScale == 1)
-            {
-                Debug.Log("Detener");
-                Time.timeScale = 0;
-                mostrar_botones();
-            }
-            else if (Time.timeScale == 0)
-            {
-                Debug.Log("Continuar");
-                Time.timeScale = 1;
-                esconder_botones();
-            }
-        }
+        //Vuelve al juego
+        pause.SetActive(false);
     }
-
-
-    public void reiniciar()
+    public void action_reset()
     {
-        //Reiniciar el nivel
-    }
+        //Reinicia el nivel
+        pause.SetActive(false);
+        reset_level();
 
-    //Chequeo de pausa
-    public void chequear_pausa()
+    }
+    public void main_menu()
     {
-        if (Time.timeScale == 1)
-        {
-            Time.timeScale = 0;
-            mostrar_botones();
-        }
-        else if (Time.timeScale == 0)
-        {
-            Time.timeScale = 1;
-            esconder_botones();
-        }
+        pause.SetActive(false);
     }
 
-    //Muestra los botones si es que esta en pausa
-    public void mostrar_botones()
+    void reset_level()
     {
-        foreach (GameObject g in botones_pausa)
-        {
-            g.SetActive(true);
-        }
+        //resetea el nivel
+        pause.SetActive(false);
     }
-
-    //Oculta los botones
-    public void esconder_botones()
-    {
-        foreach (GameObject g in botones_pausa)
-        {
-            g.SetActive(false);
-        }
-    }
-
-    //Carga el nivel
-    public void cargar_nivel(string nivel)
-    {
-       //Carga el nivel
-    }
-
-
 
 }

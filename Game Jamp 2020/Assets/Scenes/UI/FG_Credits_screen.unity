@@ -961,7 +961,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Hern\xE1n"
+  m_Text: "Hern\xE1n Perez"
 --- !u!222 &1614950569
 CanvasRenderer:
   m_ObjectHideFlags: 0
