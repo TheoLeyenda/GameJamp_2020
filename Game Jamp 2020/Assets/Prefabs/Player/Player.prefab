@@ -495,7 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedMovement: 10
   speedJump: 10
-  life: 5000
+  life: 100
   rig2D: {fileID: 0}
   RunVelocity: 0
   timeDelayStune: 2
@@ -506,7 +506,7 @@ MonoBehaviour:
   rightMovement: 100
   keyAccion: 102
   keyAttack: 109
-  dash: 0
+  dash: 101
   QuickSpeed: 10
   NormalSpeed: 10
   SlowlySpeed: 3
@@ -516,6 +516,10 @@ MonoBehaviour:
   lifeSlowlySpeed: 30
   rigidbody: {fileID: 0}
   typeMovement: 1
+  barDisplay: 0
+  auxLife: 0
+  dashMultiplier: 2
+  DashingInbulnerabilityTime: 0.8
   DefaultWeapon: {fileID: 2051860408}
   BrazosDeShokerWeapon: {fileID: 206545501}
   SableAssasinWeapon: {fileID: 219765653}

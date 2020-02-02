@@ -8,10 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UI/FG_Main_screen.unity
     guid: 720461bdddb4dab4aa4980ee71c405d5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test_Scene_F.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/UI/FG_Credits_scene.unity
-    guid: 955ba893462eab345856395240f4d556
+    path: Assets/Scenes/Levels/Nivel Tutorial.unity
+    guid: 0f4001e1bf0b8ff43bfecf785b88f66c
   m_configObjects: {}
