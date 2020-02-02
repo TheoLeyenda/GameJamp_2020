@@ -13,6 +13,7 @@ public class Player : Characther
     public KeyCode leftMovement;
     public KeyCode rightMovement;
     public KeyCode keyStune;
+    public KeyCode keyAttack;
     public KeyCode dash;
 
     [Header("Velocidades del Jugador")]
@@ -25,11 +26,19 @@ public class Player : Characther
     public int lifeQuickSpeed;
     public int lifeNormalSpeed;
     public int lifeSlowlySpeed;
+
     [HideInInspector]
     public Rigidbody2D rigidbody;
     public TypeMovement typeMovement;
 
     private StateMovement stateMovement;
+    public enum EquipedWeapon
+    {
+        Default,
+        BrazoDeShoker,
+        RifleTracker,
+        SableAssasin,
+    }
     public enum TypeMovement
     {
         Force,
