@@ -30,6 +30,7 @@ public class Player : Characther
     [HideInInspector]
     public Rigidbody2D rigidbody;
     public TypeMovement typeMovement;
+    //Life Bar
     Vector2 pos = new Vector2(10, 30);
     Vector2 size = new Vector2(100, 30);
     public float barDisplay;
@@ -248,4 +249,5 @@ public class Player : Characther
     {
         barDisplay = life / auxLife;
     }
+
 }
