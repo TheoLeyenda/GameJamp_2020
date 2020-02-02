@@ -82,6 +82,8 @@ public class Platform : MonoBehaviour
     private void OnTriggerEnter2d(Collision2D collision)
     {
 
+        Debug.Log("Entro");
+
         if (collision.gameObject.tag == "Player")
         {
             Debug.Log("Entro");

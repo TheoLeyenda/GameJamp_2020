@@ -10,11 +10,13 @@ public class Player : Characther
     public KeyCode JumpMovement;
     public KeyCode leftMovement;
     public KeyCode rightMovement;
+    public KeyCode dash;
 
     [Header("Velocidades del Jugador")]
     public float QuickSpeed; //Rapido.
     public float NormalSpeed;//Normal.
     public float SlowlySpeed;//Lento.
+    public float dashSpeed;
 
     [Header("Relacion Vida/Velocidad")]
     public int lifeQuickSpeed;
@@ -57,6 +59,7 @@ public class Player : Characther
         //Debug.Log(speedMovement);
         CheckSpeed();
         CheckAnimationMovement();
+        checkDash();
         if (Input.GetKey(rightMovement))
         {
             if (typeMovement == TypeMovement.Force)
@@ -165,5 +168,14 @@ public class Player : Characther
     public void killPlayer()
     {
         die = true;
+    }
+
+    private void checkDash()
+    {
+        if (Input.GetKey(dash))
+        {
+            speedMovement = dashSpeed;
+        }
+
     }
 }
