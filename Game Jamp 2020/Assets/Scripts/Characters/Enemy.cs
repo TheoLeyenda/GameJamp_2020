@@ -6,7 +6,6 @@ public class Enemy : Characther
 {
     // Start is called before the first frame update
     public float Damage;
-    public float RangeOfVision;
     public float distanceAttack;
     public float distanceChase;
     public float timeMovement;
@@ -34,13 +33,8 @@ public class Enemy : Characther
         {
             Movement();
         }
-        
     }
-    private void Start()
-    {
-        GameObject go = GameObject.Find("Player");
-        player = go.GetComponent<Player>();
-    }
+    
     public override void Movement()
     {
         if (normalMovement)

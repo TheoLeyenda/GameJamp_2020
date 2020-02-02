@@ -44,7 +44,11 @@ public class Shoker : Enemy
 
 
     }
-
+    private void Start()
+    {
+        GameObject go = GameObject.Find("Player");
+        player = go.GetComponent<Player>();
+    }
     // Update is called once per frame
     protected override void Update()
     {

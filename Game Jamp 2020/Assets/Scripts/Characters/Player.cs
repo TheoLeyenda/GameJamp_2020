@@ -130,7 +130,7 @@ public class Player : Characther
         {
             if (Input.GetKeyDown(keyStune))
             {
-                Debug.Log(timeDelayStune);
+                //Debug.Log(timeDelayStune);
                 timeDelayStune = timeDelayStune -  substractTimeStune;
             }
         }

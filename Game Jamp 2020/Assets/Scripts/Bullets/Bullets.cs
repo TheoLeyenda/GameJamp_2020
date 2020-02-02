@@ -8,14 +8,45 @@ public class Bullets : MonoBehaviour
     public float speed;
     public float minDamage;
     public float Damage;
+    public float speedSubstractDamage;
+    public float speedSubstractScale;
     public float Scale;
     public float minScale;
+    public Vector3 rotation;
+    public float timeLife;
+    [HideInInspector]
+    public bool enableMovement = true;
 
+    private void Start()
+    {
+        rotation = Vector3.zero;
+    }
+    private void Update()
+    {
+        if (enableMovement)
+        {
+
+            CheckCharacteristic();
+            Movement(transform.right);
+            CheckTimeLife();
+        }
+    }
+    public void CheckTimeLife()
+    {
+        if (timeLife > 0)
+        {
+            timeLife = timeLife - Time.deltaTime;
+        }
+        else if(timeLife <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
     public void CheckCharacteristic()
     {
         if (Damage > minDamage)
         {
-            Damage = Damage - Time.deltaTime;
+            Damage = Damage - Time.deltaTime * speedSubstractDamage;
         }
         else if (Damage <= minDamage)
         {
@@ -23,14 +54,18 @@ public class Bullets : MonoBehaviour
         }
         if (Scale > minScale)
         {
-            Scale = Scale - Time.deltaTime;
+            Scale = Scale - Time.deltaTime * speedSubstractScale;
         }
         else if (Scale <= minScale)
         {
             Scale = minScale;
         }
 
-        transform.localScale = new Vector3(Scale, Scale, Scale);
+        transform.localScale = new Vector3(Scale, Scale, 1);
+    }
+    public void Movement( Vector2 dir)
+    {
+        transform.position = transform.position + new Vector3(speed * dir.x, 0, 0) * Time.deltaTime;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -38,11 +73,13 @@ public class Bullets : MonoBehaviour
         {
             Player player = collision.gameObject.GetComponent<Player>();
             player.life = player.life - Damage;
+            timeLife = 0.1f;
         }
         else if (collision.gameObject.tag == "Enemy")
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             enemy.life = enemy.life - Damage;
+            timeLife = 0.1f;
         }
     }
 }
