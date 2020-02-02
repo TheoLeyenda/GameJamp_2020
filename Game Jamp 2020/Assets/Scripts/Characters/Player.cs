@@ -12,7 +12,7 @@ public class Player : Characther
     public KeyCode JumpMovement;
     public KeyCode leftMovement;
     public KeyCode rightMovement;
-    public KeyCode keyStune;
+    public KeyCode keyAccion;
     public KeyCode keyAttack;
     public KeyCode dash;
 
@@ -31,7 +31,20 @@ public class Player : Characther
     public Rigidbody2D rigidbody;
     public TypeMovement typeMovement;
 
+    [Header("Armas Melee")]
+    public MeleeWeapon DefaultWeapon;
+    public MeleeWeapon BrazosDeShokerWeapon;
+    public MeleeWeapon SableAssasinWeapon;
+
+    [Header("Armas a Distancia")]
+    public DistanceWeapon RifleTrackerWeapon;
+
+    public WeaponsPlayer currentWeapon;
+    public DistanceWeapon distaceWeapon;
+
     private StateMovement stateMovement;
+    private Item currentItem;
+    public EquipedWeapon equipedWeapon;
     public enum EquipedWeapon
     {
         Default,
@@ -60,6 +73,8 @@ public class Player : Characther
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        equipedWeapon = EquipedWeapon.Default;
+
     }
     // Update is called once per frame
     void Update()
@@ -67,6 +82,85 @@ public class Player : Characther
         Movement();
         CheckDie();
         CheckStatePlayer();
+        CheckWeapon();
+        if (currentItem != null)
+        {
+            CheckItem();
+        }
+        if (equipedWeapon == EquipedWeapon.RifleTracker)
+        {
+            if (Input.GetKeyDown(keyAttack))
+            {
+                distaceWeapon.ShootWeapon();
+                currentWeapon.CountUse--;
+                distaceWeapon.CountUse--;
+                if (currentWeapon.CountUse <= 0 || distaceWeapon.CountUse <= 0)
+                {
+                    equipedWeapon = EquipedWeapon.Default;
+                }
+            }
+        }
+    }
+    public void CheckWeapon()
+    {
+        if (currentWeapon != null)
+        {
+
+            if (Input.GetKey(keyAttack))
+            {
+                switch (equipedWeapon)
+                {
+                    case EquipedWeapon.Default:
+
+                        DefaultWeapon.gameObject.SetActive(true);
+                        BrazosDeShokerWeapon.gameObject.SetActive(false);
+                        SableAssasinWeapon.gameObject.SetActive(false);
+                        RifleTrackerWeapon.gameObject.SetActive(false);
+
+                        distaceWeapon = null;
+                        currentWeapon = DefaultWeapon;
+                        break;
+                    case EquipedWeapon.BrazoDeShoker:
+                        DefaultWeapon.gameObject.SetActive(false);
+                        BrazosDeShokerWeapon.gameObject.SetActive(true);
+                        SableAssasinWeapon.gameObject.SetActive(false);
+                        RifleTrackerWeapon.gameObject.SetActive(false);
+
+                        distaceWeapon = null;
+                        currentWeapon = BrazosDeShokerWeapon;
+                        break;
+                    case EquipedWeapon.SableAssasin:
+                        DefaultWeapon.gameObject.SetActive(false);
+                        BrazosDeShokerWeapon.gameObject.SetActive(false);
+                        SableAssasinWeapon.gameObject.SetActive(true);
+                        RifleTrackerWeapon.gameObject.SetActive(false);
+
+                        distaceWeapon = null;
+                        currentWeapon = SableAssasinWeapon;
+                        break;
+                    case EquipedWeapon.RifleTracker:
+                        DefaultWeapon.gameObject.SetActive(false);
+                        BrazosDeShokerWeapon.gameObject.SetActive(false);
+                        SableAssasinWeapon.gameObject.SetActive(false);
+                        RifleTrackerWeapon.gameObject.SetActive(true);
+
+                        currentWeapon = RifleTrackerWeapon;
+                        distaceWeapon = RifleTrackerWeapon;
+                        break;
+                }
+                if (currentWeapon.CountUse <= 0)
+                {
+                    equipedWeapon = EquipedWeapon.Default;
+                }
+                if (distaceWeapon != null)
+                {
+                    if (distaceWeapon.CountUse <= 0)
+                    {
+                        equipedWeapon = EquipedWeapon.Default;
+                    }
+                }
+            }
+        }
     }
     public void CheckStatePlayer()
     {
@@ -139,10 +233,12 @@ public class Player : Characther
             {
                 speedMovement = auxSpeedMovement;
             }
+
+            
         }
         else
         {
-            if (Input.GetKeyDown(keyStune))
+            if (Input.GetKeyDown(keyAccion))
             {
                 //Debug.Log(timeDelayStune);
                 timeDelayStune = timeDelayStune -  substractTimeStune;
@@ -228,6 +324,45 @@ public class Player : Characther
         {
             speedMovement = dashSpeed;
         }
-
+    }
+    public void CheckItem()
+    {
+        if (currentItem != null && Input.GetKeyDown(keyAccion))
+        {
+            switch (currentItem.typeItem)
+            {
+                case Item.TypeItem.BrazoDeShoker:
+                    
+                    equipedWeapon = EquipedWeapon.BrazoDeShoker;
+                    Destroy(currentItem.gameObject);
+                    break;
+                case Item.TypeItem.Default:
+                    equipedWeapon = EquipedWeapon.Default;
+                    Destroy(currentItem.gameObject);
+                    break;
+                case Item.TypeItem.RifleTracker:
+                    equipedWeapon = EquipedWeapon.RifleTracker;
+                    Destroy(currentItem.gameObject);
+                    break;
+                case Item.TypeItem.SableAssasin:
+                    equipedWeapon = EquipedWeapon.SableAssasin;
+                    Destroy(currentItem.gameObject);
+                    break;
+            }
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Item")
+        {
+            currentItem = collision.GetComponent<Item>();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Item")
+        {
+            currentItem = null;
+        }
     }
 }

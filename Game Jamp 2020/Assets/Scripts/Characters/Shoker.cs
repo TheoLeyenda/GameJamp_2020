@@ -52,6 +52,7 @@ public class Shoker : Enemy
     // Update is called once per frame
     protected override void Update()
     {
+        CheckDead();
         switch (fsm.GetCurrentState())
         {
             case (int)States.Patrol:

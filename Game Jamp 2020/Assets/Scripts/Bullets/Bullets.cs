@@ -14,6 +14,7 @@ public class Bullets : MonoBehaviour
     public float minScale;
     public Vector3 rotation;
     public float timeLife;
+    public string tagShooter;
     [HideInInspector]
     public bool enableMovement = true;
 
@@ -25,7 +26,6 @@ public class Bullets : MonoBehaviour
     {
         if (enableMovement)
         {
-
             CheckCharacteristic();
             Movement(transform.right);
             CheckTimeLife();
@@ -69,17 +69,24 @@ public class Bullets : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.tag == "Player" && tagShooter != "Player")
         {
+            //Debug.Log("AAA");
             Player player = collision.gameObject.GetComponent<Player>();
             player.life = player.life - Damage;
-            timeLife = 0.1f;
+            timeLife = 0.05f;
         }
-        else if (collision.gameObject.tag == "Enemy")
+        else if (collision.gameObject.tag == "Enemy" && tagShooter != "Enemy")
         {
+            //Debug.Log("EnemyImpact");
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             enemy.life = enemy.life - Damage;
-            timeLife = 0.1f;
+            timeLife = 0.05f;
+        }
+        else if(collision.gameObject.tag != "Player" && collision.gameObject.tag != "Enemy" && collision.gameObject.tag != "WeaponMelee" && collision.gameObject.tag != "Bullet")
+        {
+            timeLife = timeLife = 0.05f;
         }
     }
 }

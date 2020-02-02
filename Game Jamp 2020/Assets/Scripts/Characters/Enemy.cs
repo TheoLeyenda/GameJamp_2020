@@ -18,6 +18,8 @@ public class Enemy : Characther
     protected FSM fsm;
     protected Player player;
     protected Vector2 DistanceVector;
+    public GameObject DropItem;
+    public GameObject generatorCadaver;
 
     [SerializeField]
     protected StateMovement stateMovement;
@@ -105,6 +107,15 @@ public class Enemy : Characther
                 break;
         }
         timeMovement = auxTimeMovement;
+    }
+    public void CheckDead()
+    {
+        if (life <= 0)
+        {
+            Instantiate(DropItem, new Vector3(transform.position.x, generatorCadaver.transform.position.y,transform.position.z), Quaternion.identity, null);
+            Destroy(this.gameObject);
+        }
+        
     }
     
     

@@ -34,6 +34,7 @@ public class Assasin : Enemy
     }
     protected override void Update()
     {
+        CheckDead();
         if (patrol)
         {
             if (enableMovement)

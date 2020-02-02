@@ -7,6 +7,10 @@ TagManager:
   - Floor
   - LateralMovement
   - Trap
+  - Enemy
+  - Item
+  - WeaponMelee
+  - Bullet
   layers:
   - Default
   - TransparentFX

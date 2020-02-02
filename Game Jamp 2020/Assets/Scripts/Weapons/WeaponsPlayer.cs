@@ -5,4 +5,6 @@ using UnityEngine;
 public class WeaponsPlayer : MonoBehaviour
 {
     public float Damage;
+    public float CountUse;
+    public float auxCountUse;
 }

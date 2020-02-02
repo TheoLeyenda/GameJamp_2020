@@ -6,7 +6,7 @@ public class Searcher : Enemy
 {
     // Start is called before the first frame update
     [Header("Sarcher Parametros")]
-    public float speedBullet;
+    //public float speedBullet;
     private bool enableShoot = false;
     public float delayShoot;
     public float auxDelayShoot;
@@ -27,6 +27,7 @@ public class Searcher : Enemy
     // Update is called once per frame
     protected override void Update()
     {
+        CheckDead();
         if (player != null)
         {
             CheckPlayerInRange();
@@ -76,6 +77,7 @@ public class Searcher : Enemy
     }
     public void Shoot()
     {
-        Instantiate(originalPrefabBullet, generatorBullet.transform.position, generatorBullet.transform.rotation, null);
+        GameObject bullet = Instantiate(originalPrefabBullet, generatorBullet.transform.position, generatorBullet.transform.rotation, null);
+        bullet.GetComponent<Bullets>().tagShooter = "Enemy";
     }
 }
