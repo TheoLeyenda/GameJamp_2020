@@ -30,6 +30,11 @@ public class Player : Characther
     [HideInInspector]
     public Rigidbody2D rigidbody;
     public TypeMovement typeMovement;
+    Vector2 pos = new Vector2(10, 30);
+    Vector2 size = new Vector2(100, 30);
+    public float barDisplay;
+    public float auxLife;
+
 
     private StateMovement stateMovement;
     public enum EquipedWeapon
@@ -60,13 +65,21 @@ public class Player : Characther
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        auxLife = life;
     }
+    private void OnGUI()
+    {
+        GUI.Box(new Rect(pos, size), "");
+        GUI.Box(new Rect(pos.x, pos.y,life, size.y), "");
+    }
+
     // Update is called once per frame
     void Update()
     {
         Movement();
         CheckDie();
         CheckStatePlayer();
+        update_life_bar();
     }
     public void CheckStatePlayer()
     {
@@ -229,5 +242,10 @@ public class Player : Characther
             speedMovement = dashSpeed;
         }
 
+    }
+
+    public void update_life_bar()
+    {
+        barDisplay = life / auxLife;
     }
 }
