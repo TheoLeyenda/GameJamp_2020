@@ -77,6 +77,16 @@ public class Bullets : MonoBehaviour
             player.life = player.life - Damage;
             timeLife = 0.05f;
         }
+        if (collision.gameObject.tag == "Player" )
+        {
+            Player player = collision.gameObject.GetComponent<Player>();
+            if (!player.isDashing())
+            {
+                player.life = player.life - Damage;
+                timeLife = 0.1f;
+            }
+
+        }
         else if (collision.gameObject.tag == "Enemy" && tagShooter != "Enemy")
         {
             //Debug.Log("EnemyImpact");

@@ -17,22 +17,21 @@ public class RayTramp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        checkNearPlayer();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
 
-        if (collision.gameObject.tag == "Player")
+
+    private void checkNearPlayer()
+    {
+        Vector3 playerPosition = player.getPosition();
+        Vector3 myPosition = this.transform.position;
+
+        double range = 3.5;
+        if ((Vector3.Distance(myPosition, playerPosition) < range) && !player.isDashing())
         {
-            Debug.Log("Activada trampa lazer");
+            //Do something
             player.killPlayer();
         }
-    }
-
-    private void OnTriggerExit2d(Collision2D collision)
-    {
-        Debug.Log("Salio");
-        player.transform.parent = null;
     }
 }

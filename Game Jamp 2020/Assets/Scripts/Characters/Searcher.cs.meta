@@ -3,7 +3,12 @@ guid: 6084d6b145cf0dd48a32c961bc8f5d76
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - rig2D: {instanceID: 0}
+  - originalPrefabBullet: {instanceID: 0}
+  - generatorBullet: {instanceID: 0}
+  - doneDamage: {fileID: 8300000, guid: aed032a61ee70ba42b551500f082489a, type: 3}
+  - reciveDamage: {fileID: 8300000, guid: 8cfcaf3c0d49c0248bec22d95513a99c, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

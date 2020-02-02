@@ -11,6 +11,7 @@ TagManager:
   - Item
   - WeaponMelee
   - Bullet
+  - CameraVision
   layers:
   - Default
   - TransparentFX

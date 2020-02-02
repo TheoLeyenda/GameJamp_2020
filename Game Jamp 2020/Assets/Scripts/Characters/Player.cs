@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +30,15 @@ public class Player : Characther
     [HideInInspector]
     public Rigidbody2D rigidbody;
     public TypeMovement typeMovement;
+    Vector2 pos = new Vector2(10, 30);
+    Vector2 size = new Vector2(100, 30);
+    public float barDisplay;
+    public float auxLife;
+    private Direction direction;
+    private bool dashing;
+    public float dashMultiplier;
+    public double DashingInbulnerabilityTime;
+    private int timeStartDashing;
 
     [Header("Armas Melee")]
     public MeleeWeapon DefaultWeapon;
@@ -45,6 +54,11 @@ public class Player : Characther
     private StateMovement stateMovement;
     private Item currentItem;
     public EquipedWeapon equipedWeapon;
+    private enum Direction
+    {
+        Left,
+        Right,
+    }
     public enum EquipedWeapon
     {
         Default,
@@ -74,7 +88,13 @@ public class Player : Characther
     {
         rigidbody = GetComponent<Rigidbody2D>();
         equipedWeapon = EquipedWeapon.Default;
+        auxLife = life;
 
+    }
+    private void OnGUI()
+    {
+        GUI.Box(new Rect(pos, size), "");
+        GUI.Box(new Rect(pos.x, pos.y,life, size.y), "");
     }
     // Update is called once per frame
     void Update()
@@ -83,6 +103,7 @@ public class Player : Characther
         CheckDie();
         CheckStatePlayer();
         CheckWeapon();
+        update_life_bar();
         if (currentItem != null)
         {
             CheckItem();
@@ -191,7 +212,7 @@ public class Player : Characther
         //Debug.Log(speedMovement);
         CheckSpeed();
         CheckAnimationMovement();
-        checkDash();
+        chekDashing();
         if (statePlayer != StatePlayer.Stunt)
         {
             CheckSpeed();
@@ -200,10 +221,12 @@ public class Player : Characther
             {
                 if (typeMovement == TypeMovement.Force)
                 {
+                    direction = Direction.Right;
                     rigidbody.AddForce(Vector2.right * speedMovement, ForceMode2D.Force);
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
+                    direction = Direction.Right;
                     RightMovement(false);
 
                 }
@@ -214,12 +237,30 @@ public class Player : Characther
                 if (typeMovement == TypeMovement.Force)
                 {
                     rigidbody.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
+                    direction = Direction.Left;
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
                     LeftMovement(false);
+                    direction = Direction.Left;
                 }
                 //Debug.Log("left");
+            }
+            if (Input.GetKeyDown(dash) && inFloor)
+            {
+
+                timeStartDashing = System.DateTime.Now.Second;
+                dashing = true;
+                if (direction.Equals(Direction.Right))
+                {
+                    rigidbody.AddForce(Vector2.right * speedJump * dashMultiplier, ForceMode2D.Impulse);
+                    speedMovement = speedMovement / jampDivide;
+                }
+                else
+                {
+                    rigidbody.AddForce(Vector2.left * speedJump * dashMultiplier, ForceMode2D.Impulse);
+                    speedMovement = speedMovement / jampDivide;
+                }
             }
 
             if (Input.GetKeyDown(JumpMovement) && inFloor)
@@ -365,4 +406,30 @@ public class Player : Characther
             currentItem = null;
         }
     }
+        public void update_life_bar()
+    {
+        barDisplay = life / auxLife;
+    }
+
+    private void chekDashing()
+    {
+        if (dashing)
+        {
+            float timeDashing = System.DateTime.Now.Second - timeStartDashing;
+            if (timeDashing > DashingInbulnerabilityTime)
+            {
+                this.rigidbody.velocity = Vector3.zero;
+                this.rigidbody.angularVelocity = 0;
+                dashing = false;
+                            }
+        }
+    }
+
+    public bool isDashing()
+    {
+        return this.dashing;
+    }
+
+
+}
 }
