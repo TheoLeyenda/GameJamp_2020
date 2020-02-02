@@ -79,8 +79,10 @@ public class Platform : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2d(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        Debug.Log("Entro");
 
         if (collision.gameObject.tag == "Player")
         {
@@ -89,11 +91,12 @@ public class Platform : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2d(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         Debug.Log("Salio");
         player.transform.parent = null;
     }
+
 
     void movePlatformLateralRight()
     {
