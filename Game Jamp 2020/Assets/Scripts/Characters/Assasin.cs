@@ -23,8 +23,18 @@ public class Assasin : Enemy
     public SpriteRenderer spriteRenderer;
     private bool inTrigger = false;
 
-    private bool inMine = false;
+    public AudioClip doneDamage;
+    public AudioClip reciveDamage;
 
+    private AudioSource source;
+    private float volume = 1.0F;
+
+
+    private bool inMine = false;
+    private void Awake()
+    {
+        source = GetComponent<AudioSource>();
+    }
     void Start()
     {
         GameObject go = GameObject.Find("Player");
@@ -161,6 +171,7 @@ public class Assasin : Enemy
                 {
                     player.life = player.life - Damage;
                     normalAttackDelay = auxNormalAttackDelay;
+                    source.PlayOneShot(doneDamage, volume);
                 }
                 else if (normalAttackDelay > 0)
                 {
@@ -169,6 +180,8 @@ public class Assasin : Enemy
             }
         }
        
+
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -190,4 +203,7 @@ public class Assasin : Enemy
             }
         }
     }
+    
+
+
 }

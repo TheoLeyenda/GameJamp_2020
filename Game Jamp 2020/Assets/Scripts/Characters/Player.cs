@@ -20,21 +20,21 @@ public class Player : Characther
     public float QuickSpeed; //Rapido.
     public float NormalSpeed;//Normal.
     public float SlowlySpeed;//Lento.
+    public float dashSpeed;
 
     [Header("Relacion Vida/Velocidad")]
     public int lifeQuickSpeed;
     public int lifeNormalSpeed;
     public int lifeSlowlySpeed;
- 
+
+    [HideInInspector]
     public Rigidbody2D rigidbody;
     public TypeMovement typeMovement;
-    private Direction direction;
+    Vector2 pos = new Vector2(10, 30);
+    Vector2 size = new Vector2(100, 30);
+    public float barDisplay;
+    public float auxLife;
 
-
-    private bool dashing;
-    public float dashMultiplier;
-    public double DashingInbulnerabilityTime;
-    private int timeStartDashing;
 
     private StateMovement stateMovement;
     public enum EquipedWeapon
@@ -54,30 +54,32 @@ public class Player : Characther
         QuickMovement, //Movimiento Rapido.
         NormalMovement,//Movimiento Normal.
         SlowlyMovement,//Movimiento Despacio.
-    }
 
-    private enum Direction
-    {
-        Left,
-        Right,
     }
     public enum StatePlayer
     {
         none,
         Stunt,
-
     }
     public StatePlayer statePlayer;
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        auxLife = life;
     }
+    private void OnGUI()
+    {
+        GUI.Box(new Rect(pos, size), "");
+        GUI.Box(new Rect(pos.x, pos.y,life, size.y), "");
+    }
+
     // Update is called once per frame
     void Update()
     {
         Movement();
         CheckDie();
         CheckStatePlayer();
+        update_life_bar();
     }
     public void CheckStatePlayer()
     {
@@ -107,8 +109,8 @@ public class Player : Characther
         //float vertical = Input.GetAxis("Vertical");
         //Debug.Log(speedMovement);
         CheckSpeed();
-        chekDashing();
         CheckAnimationMovement();
+        checkDash();
         if (statePlayer != StatePlayer.Stunt)
         {
             CheckSpeed();
@@ -118,13 +120,11 @@ public class Player : Characther
                 if (typeMovement == TypeMovement.Force)
                 {
                     rigidbody.AddForce(Vector2.right * speedMovement, ForceMode2D.Force);
-                    direction = Direction.Right;
-
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
                     RightMovement(false);
-                    direction = Direction.Right;
+
                 }
                 //Debug.Log("right");
             }
@@ -133,12 +133,10 @@ public class Player : Characther
                 if (typeMovement == TypeMovement.Force)
                 {
                     rigidbody.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
-                    direction = Direction.Left;
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
                     LeftMovement(false);
-                    direction = Direction.Left;
                 }
                 //Debug.Log("left");
             }
@@ -149,22 +147,6 @@ public class Player : Characther
                 speedMovement = speedMovement / jampDivide;
                 inFloor = false;
                 //Debug.Log("Up");
-            }
-            if(Input.GetKeyDown(dash) && inFloor) 
-            {
-
-                timeStartDashing = System.DateTime.Now.Second;
-                dashing = true;
-                if (direction.Equals(Direction.Right))
-                {
-                    rigidbody.AddForce(Vector2.right * speedJump * dashMultiplier, ForceMode2D.Impulse);
-                    speedMovement = speedMovement / jampDivide;
-                }
-                else
-                {
-                    rigidbody.AddForce(Vector2.left * speedJump * dashMultiplier, ForceMode2D.Impulse);
-                    speedMovement = speedMovement / jampDivide;
-                }
             }
             else if (inFloor && !Input.GetKeyDown(JumpMovement))
             {
@@ -210,7 +192,6 @@ public class Player : Characther
         {
             switch (stateMovement)
             {
-
                 case StateMovement.QuickMovement:
                     speedMovement = QuickSpeed;
                     auxSpeedMovement = QuickSpeed;
@@ -254,23 +235,17 @@ public class Player : Characther
         die = true;
     }
 
-    public bool isDashing()
-    { 
-        return this.dashing;
-    }
-
-    private void chekDashing()
+    private void checkDash()
     {
-        if (dashing)
+        if (Input.GetKey(dash))
         {
-            float timeDashing = System.DateTime.Now.Second - timeStartDashing;
-            if (timeDashing> DashingInbulnerabilityTime)
-            {
-                this.rigidbody.velocity = Vector3.zero;
-                this.rigidbody.angularVelocity = 0;
-                dashing = false;
-            }
+            speedMovement = dashSpeed;
         }
+
     }
 
+    public void update_life_bar()
+    {
+        barDisplay = life / auxLife;
+    }
 }

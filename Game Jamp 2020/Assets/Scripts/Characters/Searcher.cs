@@ -13,6 +13,17 @@ public class Searcher : Enemy
     public GameObject originalPrefabBullet;
     public GameObject generatorBullet;
     public DirectionShoot directionShoot;
+
+    public AudioClip doneDamage;
+    public AudioClip reciveDamage;
+    private AudioSource source;
+    private float volume = 1.0F;
+
+    private void Awake()
+    {
+        source = GetComponent<AudioSource>();
+    }
+
     public enum DirectionShoot
     {
         left,
@@ -77,5 +88,6 @@ public class Searcher : Enemy
     public void Shoot()
     {
         Instantiate(originalPrefabBullet, generatorBullet.transform.position, generatorBullet.transform.rotation, null);
+        source.PlayOneShot(doneDamage, volume);
     }
 }

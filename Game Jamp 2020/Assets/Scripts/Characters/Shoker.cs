@@ -8,6 +8,14 @@ public class Shoker : Enemy
     public float delayAttack;
     public float auxDelayAttack;
     private bool playerScape = false;
+
+    public AudioClip doneDamage;
+    public AudioClip reciveDamage;
+
+    private AudioSource source;
+    private float volume = 1.0F;
+
+
     public enum States
     {
         Patrol,
@@ -42,7 +50,7 @@ public class Shoker : Enemy
         fsm.SetRelations((int)States.Stunt, (int)States.Chase, (int)Events.outRangeStunt);
         fsm.SetRelations((int)States.Chase, (int)States.Patrol, (int)Events.outTriggerplayer);
 
-
+        source = GetComponent<AudioSource>();
     }
     private void Start()
     {
@@ -137,7 +145,7 @@ public class Shoker : Enemy
                 player.life = 0;
             }
             fsm.SendEvent((int)Events.FinishAttack);
-
+            source.PlayOneShot(doneDamage, volume);
         }
         if (Mathf.Abs((transform.position.x - player.transform.position.x)) > distanceChase || Mathf.Abs((transform.position.y - player.transform.position.y)) > distaceY)
         {
