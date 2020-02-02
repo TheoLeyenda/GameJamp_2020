@@ -12,6 +12,7 @@ public class Player : Characther
     public KeyCode JumpMovement;
     public KeyCode leftMovement;
     public KeyCode rightMovement;
+    public KeyCode keyStune;
     public KeyCode dash;
 
     [Header("Velocidades del Jugador")]
