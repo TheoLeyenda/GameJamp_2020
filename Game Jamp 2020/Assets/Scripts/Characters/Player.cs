@@ -5,7 +5,9 @@ using UnityEngine;
 public class Player : Characther
 {
     // Start is called before the first frame update
-
+    public float timeDelayStune;
+    public float jampDivide;
+    public float substractTimeStune;
     [Header("Controles Jugador")]
     public KeyCode JumpMovement;
     public KeyCode leftMovement;
@@ -22,9 +24,10 @@ public class Player : Characther
     public int lifeQuickSpeed;
     public int lifeNormalSpeed;
     public int lifeSlowlySpeed;
-
+    [HideInInspector]
+    public Rigidbody2D rigidbody;
     public TypeMovement typeMovement;
-    
+
     private StateMovement stateMovement;
     public enum TypeMovement
     {
@@ -38,12 +41,36 @@ public class Player : Characther
         SlowlyMovement,//Movimiento Despacio.
 
     }
-
+    public enum StatePlayer
+    {
+        none,
+        Stunt,
+    }
+    public StatePlayer statePlayer;
+    private void Start()
+    {
+        rigidbody = GetComponent<Rigidbody2D>();
+    }
     // Update is called once per frame
     void Update()
     {
         Movement();
         CheckDie();
+        CheckStatePlayer();
+    }
+    public void CheckStatePlayer()
+    {
+        if (statePlayer == StatePlayer.Stunt)
+        {
+            if (timeDelayStune > 0)
+            {
+                timeDelayStune = timeDelayStune - Time.deltaTime;
+            }
+            else if (timeDelayStune <= 0)
+            {
+                statePlayer = StatePlayer.none;   
+            }
+        }
     }
     public void CheckDie()
     {
@@ -51,6 +78,7 @@ public class Player : Characther
         if (die)
         {
             gameObject.SetActive(false);
+            transform.position = new Vector3(-1000, -1000, -1000);
         }
     }
     public override void Movement()
@@ -60,41 +88,55 @@ public class Player : Characther
         CheckSpeed();
         CheckAnimationMovement();
         checkDash();
-        if (Input.GetKey(rightMovement))
+        if (statePlayer != StatePlayer.Stunt)
         {
-            if (typeMovement == TypeMovement.Force)
+            CheckSpeed();
+            CheckAnimationMovement();
+            if (Input.GetKey(rightMovement))
             {
-                rig2D.AddForce(Vector2.right * speedMovement, ForceMode2D.Force);
-            }
-            else if (typeMovement == TypeMovement.Position)
-            {
-                transform.position = transform.position + new Vector3(speedMovement, 0, 0) * Time.deltaTime;
-            }
-            //Debug.Log("right");
-        }
-        else if (Input.GetKey(leftMovement))
-        {
-            if (typeMovement == TypeMovement.Force)
-            {
-                rig2D.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
-            }
-            else if (typeMovement == TypeMovement.Position)
-            {
-                transform.position = transform.position - new Vector3(speedMovement, 0, 0) * Time.deltaTime;
-            }
-            //Debug.Log("left");
-        }
+                if (typeMovement == TypeMovement.Force)
+                {
+                    rigidbody.AddForce(Vector2.right * speedMovement, ForceMode2D.Force);
+                }
+                else if (typeMovement == TypeMovement.Position)
+                {
+                    RightMovement(false);
 
-        if (Input.GetKeyDown(JumpMovement) && inFloor)
-        {
-            rig2D.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
-            speedMovement = speedMovement / 2f;
-            inFloor = false;
-            //Debug.Log("Up");
+                }
+                //Debug.Log("right");
+            }
+            else if (Input.GetKey(leftMovement))
+            {
+                if (typeMovement == TypeMovement.Force)
+                {
+                    rigidbody.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
+                }
+                else if (typeMovement == TypeMovement.Position)
+                {
+                    LeftMovement(false);
+                }
+                //Debug.Log("left");
+            }
+
+            if (Input.GetKeyDown(JumpMovement) && inFloor)
+            {
+                rigidbody.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
+                speedMovement = speedMovement / jampDivide;
+                inFloor = false;
+                //Debug.Log("Up");
+            }
+            else if (inFloor && !Input.GetKeyDown(JumpMovement))
+            {
+                speedMovement = auxSpeedMovement;
+            }
         }
-        else if(inFloor && !Input.GetKeyDown(JumpMovement))
+        else
         {
-            speedMovement = auxSpeedMovement;
+            if (Input.GetKeyDown(keyStune))
+            {
+                Debug.Log(timeDelayStune);
+                timeDelayStune = timeDelayStune -  substractTimeStune;
+            }
         }
     }
     public void CheckAnimationMovement()
@@ -150,7 +192,7 @@ public class Player : Characther
     {
         return stateMovement;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Floor")
         {
