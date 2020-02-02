@@ -266,6 +266,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4379817589444155358, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: dashMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4379817589444155358, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: DashingInbulnerabilityTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4379817589444155358, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: dash
+      value: 101
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80580c83e2d8c1e44a67fd30d9c6173b, type: 3}
 --- !u!1 &123318386
