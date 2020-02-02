@@ -55,6 +55,7 @@ public class Searcher : Enemy
         }
         else
         {
+            Movement();
             enableShoot = false;
         }
     }

@@ -146,14 +146,15 @@ MonoBehaviour:
   speedJump: 3
   life: 100
   rig2D: {fileID: 0}
+  RunVelocity: 8
   Damage: 75
-  RangeOfVision: 12
   distanceAttack: 1.5
-  distanceChase: 5
-  timeMovement: 4
-  auxTimeMovement: 4
+  distanceChase: 6
+  timeMovement: 3
+  auxTimeMovement: 3
   distaceDectectedFloor: 5
   enableMovement: 1
+  distaceY: 1.5
   stateMovement: 0
   delayAttack: 3
   auxDelayAttack: 3

@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6084d6b145cf0dd48a32c961bc8f5d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMovement: 0
+  speedMovement: 3
   speedJump: 0
   life: 100
   rig2D: {fileID: 0}
@@ -130,9 +130,9 @@ MonoBehaviour:
   Damage: 120
   distanceAttack: 6
   distanceChase: 0
-  timeMovement: 0
-  auxTimeMovement: 0
-  distaceDectectedFloor: 0
+  timeMovement: 3
+  auxTimeMovement: 3
+  distaceDectectedFloor: 5
   enableMovement: 1
   distaceY: 0.5
   stateMovement: 0
