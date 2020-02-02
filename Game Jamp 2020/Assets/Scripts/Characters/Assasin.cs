@@ -23,8 +23,18 @@ public class Assasin : Enemy
     public SpriteRenderer spriteRenderer;
     private bool inTrigger = false;
 
-    private bool inMine = false;
+    public AudioClip doneDamage;
+    public AudioClip reciveDamage;
 
+    private AudioSource source;
+    private float volume = 1.0F;
+
+
+    private bool inMine = false;
+    private void Awake()
+    {
+        source = GetComponent<AudioSource>();
+    }
     void Start()
     {
         GameObject go = GameObject.Find("Player");
@@ -76,18 +86,22 @@ public class Assasin : Enemy
     }
     public void CheckCollider()
     {
-        if (stateAssasin == StateAssasin.Assasin)
+        if (!player.isDashing())
         {
-            //boxCollider2D.isTrigger = false;
-            if (player.life > 0)
+            if (stateAssasin == StateAssasin.Assasin)
             {
-                spriteRenderer.color = Color.white;
+                //boxCollider2D.isTrigger = false;
+                if (player.life > 0)
+                {
+                    spriteRenderer.color = Color.white;
+                }
+            }
+            else if (stateAssasin == StateAssasin.Mine)
+            {
+                //boxCollider2D.isTrigger = true;
             }
         }
-        else if (stateAssasin == StateAssasin.Mine)
-        {
-            //boxCollider2D.isTrigger = true;
-        }
+        
     }
     void CheckDodge()
     {
@@ -157,6 +171,7 @@ public class Assasin : Enemy
                 {
                     player.life = player.life - Damage;
                     normalAttackDelay = auxNormalAttackDelay;
+                    source.PlayOneShot(doneDamage, volume);
                 }
                 else if (normalAttackDelay > 0)
                 {
@@ -165,6 +180,8 @@ public class Assasin : Enemy
             }
         }
        
+
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -186,4 +203,7 @@ public class Assasin : Enemy
             }
         }
     }
+    
+
+
 }

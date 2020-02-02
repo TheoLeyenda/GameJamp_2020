@@ -30,12 +30,19 @@ public class Player : Characther
     [HideInInspector]
     public Rigidbody2D rigidbody;
     public TypeMovement typeMovement;
-    //Life Bar
     Vector2 pos = new Vector2(10, 30);
     Vector2 size = new Vector2(100, 30);
     public float barDisplay;
     public float auxLife;
 
+
+    private Direction direction;
+
+
+    private bool dashing;
+    public float dashMultiplier;
+    public double DashingInbulnerabilityTime;
+    private int timeStartDashing;
 
     private StateMovement stateMovement;
     public enum EquipedWeapon
@@ -44,6 +51,11 @@ public class Player : Characther
         BrazoDeShoker,
         RifleTracker,
         SableAssasin,
+    }
+    private enum Direction
+    {
+        Left,
+        Right,
     }
     public enum TypeMovement
     {
@@ -110,8 +122,8 @@ public class Player : Characther
         //float vertical = Input.GetAxis("Vertical");
         //Debug.Log(speedMovement);
         CheckSpeed();
+        chekDashing();
         CheckAnimationMovement();
-        checkDash();
         if (statePlayer != StatePlayer.Stunt)
         {
             CheckSpeed();
@@ -121,11 +133,13 @@ public class Player : Characther
                 if (typeMovement == TypeMovement.Force)
                 {
                     rigidbody.AddForce(Vector2.right * speedMovement, ForceMode2D.Force);
+                    direction = Direction.Right;
+
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
                     RightMovement(false);
-
+                    direction = Direction.Right;
                 }
                 //Debug.Log("right");
             }
@@ -134,10 +148,12 @@ public class Player : Characther
                 if (typeMovement == TypeMovement.Force)
                 {
                     rigidbody.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
+                    direction = Direction.Left;
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
                     LeftMovement(false);
+                    direction = Direction.Left;
                 }
                 //Debug.Log("left");
             }
@@ -149,6 +165,22 @@ public class Player : Characther
                 inFloor = false;
                 //Debug.Log("Up");
             }
+            if (Input.GetKeyDown(dash) && inFloor)
+            {
+
+                timeStartDashing = System.DateTime.Now.Second;
+                dashing = true;
+                if (direction.Equals(Direction.Right))
+                {
+                    rigidbody.AddForce(Vector2.right * speedJump * dashMultiplier, ForceMode2D.Impulse);
+                    speedMovement = speedMovement / jampDivide;
+                }
+                else
+                {
+                    rigidbody.AddForce(Vector2.left * speedJump * dashMultiplier, ForceMode2D.Impulse);
+                    speedMovement = speedMovement / jampDivide;
+                }
+            }
             else if (inFloor && !Input.GetKeyDown(JumpMovement))
             {
                 speedMovement = auxSpeedMovement;
@@ -159,7 +191,7 @@ public class Player : Characther
             if (Input.GetKeyDown(keyStune))
             {
                 //Debug.Log(timeDelayStune);
-                timeDelayStune = timeDelayStune -  substractTimeStune;
+                timeDelayStune = timeDelayStune - substractTimeStune;
             }
         }
     }
@@ -249,5 +281,25 @@ public class Player : Characther
     {
         barDisplay = life / auxLife;
     }
+
+    private void chekDashing()
+    {
+        if (dashing)
+        {
+            float timeDashing = System.DateTime.Now.Second - timeStartDashing;
+            if (timeDashing > DashingInbulnerabilityTime)
+            {
+                this.rigidbody.velocity = Vector3.zero;
+                this.rigidbody.angularVelocity = 0;
+                dashing = false;
+            }
+        }
+    }
+
+    public bool isDashing()
+    {
+        return this.dashing;
+    }
+
 
 }
