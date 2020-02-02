@@ -20,16 +20,21 @@ public class Player : Characther
     public float QuickSpeed; //Rapido.
     public float NormalSpeed;//Normal.
     public float SlowlySpeed;//Lento.
-    public float dashSpeed;
 
     [Header("Relacion Vida/Velocidad")]
     public int lifeQuickSpeed;
     public int lifeNormalSpeed;
     public int lifeSlowlySpeed;
-
-    [HideInInspector]
+ 
     public Rigidbody2D rigidbody;
     public TypeMovement typeMovement;
+    private Direction direction;
+
+
+    private bool dashing;
+    public float dashMultiplier;
+    public double DashingInbulnerabilityTime;
+    private int timeStartDashing;
 
     private StateMovement stateMovement;
     public enum EquipedWeapon
@@ -49,12 +54,18 @@ public class Player : Characther
         QuickMovement, //Movimiento Rapido.
         NormalMovement,//Movimiento Normal.
         SlowlyMovement,//Movimiento Despacio.
+    }
 
+    private enum Direction
+    {
+        Left,
+        Right,
     }
     public enum StatePlayer
     {
         none,
         Stunt,
+
     }
     public StatePlayer statePlayer;
     private void Start()
@@ -96,8 +107,8 @@ public class Player : Characther
         //float vertical = Input.GetAxis("Vertical");
         //Debug.Log(speedMovement);
         CheckSpeed();
+        chekDashing();
         CheckAnimationMovement();
-        checkDash();
         if (statePlayer != StatePlayer.Stunt)
         {
             CheckSpeed();
@@ -107,11 +118,13 @@ public class Player : Characther
                 if (typeMovement == TypeMovement.Force)
                 {
                     rigidbody.AddForce(Vector2.right * speedMovement, ForceMode2D.Force);
+                    direction = Direction.Right;
+
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
                     RightMovement(false);
-
+                    direction = Direction.Right;
                 }
                 //Debug.Log("right");
             }
@@ -120,10 +133,12 @@ public class Player : Characther
                 if (typeMovement == TypeMovement.Force)
                 {
                     rigidbody.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
+                    direction = Direction.Left;
                 }
                 else if (typeMovement == TypeMovement.Position)
                 {
                     LeftMovement(false);
+                    direction = Direction.Left;
                 }
                 //Debug.Log("left");
             }
@@ -134,6 +149,22 @@ public class Player : Characther
                 speedMovement = speedMovement / jampDivide;
                 inFloor = false;
                 //Debug.Log("Up");
+            }
+            if(Input.GetKeyDown(dash) && inFloor) 
+            {
+
+                timeStartDashing = System.DateTime.Now.Second;
+                dashing = true;
+                if (direction.Equals(Direction.Right))
+                {
+                    rigidbody.AddForce(Vector2.right * speedJump * dashMultiplier, ForceMode2D.Impulse);
+                    speedMovement = speedMovement / jampDivide;
+                }
+                else
+                {
+                    rigidbody.AddForce(Vector2.left * speedJump * dashMultiplier, ForceMode2D.Impulse);
+                    speedMovement = speedMovement / jampDivide;
+                }
             }
             else if (inFloor && !Input.GetKeyDown(JumpMovement))
             {
@@ -179,6 +210,7 @@ public class Player : Characther
         {
             switch (stateMovement)
             {
+
                 case StateMovement.QuickMovement:
                     speedMovement = QuickSpeed;
                     auxSpeedMovement = QuickSpeed;
@@ -222,12 +254,23 @@ public class Player : Characther
         die = true;
     }
 
-    private void checkDash()
-    {
-        if (Input.GetKey(dash))
-        {
-            speedMovement = dashSpeed;
-        }
-
+    public bool isDashing()
+    { 
+        return this.dashing;
     }
+
+    private void chekDashing()
+    {
+        if (dashing)
+        {
+            float timeDashing = System.DateTime.Now.Second - timeStartDashing;
+            if (timeDashing> DashingInbulnerabilityTime)
+            {
+                this.rigidbody.velocity = Vector3.zero;
+                this.rigidbody.angularVelocity = 0;
+                dashing = false;
+            }
+        }
+    }
+
 }

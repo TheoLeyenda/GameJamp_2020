@@ -120,6 +120,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!50 &172204878 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 5243459508274458821, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5243459508613326536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +815,7 @@ PrefabInstance:
     - target: {fileID: 2039494969641883456, guid: 34b4acb1e506640469bba10c68cbe7c6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.37
+      value: 6.08
       objectReference: {fileID: 0}
     - target: {fileID: 2039494969641883456, guid: 34b4acb1e506640469bba10c68cbe7c6,
         type: 3}
@@ -1004,6 +1010,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4379817589444155358, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: dash
+      value: 101
+      objectReference: {fileID: 0}
+    - target: {fileID: -4379817589444155358, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: dashMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4379817589444155358, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: DashingInbulnerabilityTime
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4379817589444155358, guid: 80580c83e2d8c1e44a67fd30d9c6173b,
+        type: 3}
+      propertyPath: rigidbody
+      value: 
+      objectReference: {fileID: 172204878}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80580c83e2d8c1e44a67fd30d9c6173b, type: 3}
 --- !u!1001 &7198470580315522264

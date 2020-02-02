@@ -48,6 +48,11 @@ public class Characther : MonoBehaviour
         transform.position = transform.position + new Vector3(speed, 0, 0) * Time.deltaTime;
         transform.eulerAngles = new Vector3(0, 0, 0);
     }
+
+    public Vector3 getPosition()
+    {
+        return this.transform.position;
+    }
     public virtual void Attack(){ }
     public virtual void Movement(){ }
 }

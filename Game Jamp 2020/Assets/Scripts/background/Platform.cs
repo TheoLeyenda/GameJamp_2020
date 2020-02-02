@@ -82,18 +82,14 @@ public class Platform : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        Debug.Log("Entro");
-
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Entro");
             player.transform.parent = this.transform;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Salio");
         player.transform.parent = null;
     }
 

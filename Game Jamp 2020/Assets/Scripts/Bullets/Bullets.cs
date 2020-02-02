@@ -69,11 +69,16 @@ public class Bullets : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" )
         {
+          ;
             Player player = collision.gameObject.GetComponent<Player>();
-            player.life = player.life - Damage;
-            timeLife = 0.1f;
+            if (!player.isDashing())
+            {
+                player.life = player.life - Damage;
+                timeLife = 0.1f;
+            }
+
         }
         else if (collision.gameObject.tag == "Enemy")
         {

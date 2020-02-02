@@ -76,18 +76,22 @@ public class Assasin : Enemy
     }
     public void CheckCollider()
     {
-        if (stateAssasin == StateAssasin.Assasin)
+        if (!player.isDashing())
         {
-            //boxCollider2D.isTrigger = false;
-            if (player.life > 0)
+            if (stateAssasin == StateAssasin.Assasin)
             {
-                spriteRenderer.color = Color.white;
+                //boxCollider2D.isTrigger = false;
+                if (player.life > 0)
+                {
+                    spriteRenderer.color = Color.white;
+                }
+            }
+            else if (stateAssasin == StateAssasin.Mine)
+            {
+                //boxCollider2D.isTrigger = true;
             }
         }
-        else if (stateAssasin == StateAssasin.Mine)
-        {
-            //boxCollider2D.isTrigger = true;
-        }
+        
     }
     void CheckDodge()
     {

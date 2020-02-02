@@ -111,11 +111,15 @@ public class Shoker : Enemy
     }
     public void Stunt()
     {
-        player.timeDelayStune = delayAttack + 1;
-        player.statePlayer = Player.StatePlayer.Stunt;
-        fsm.SendEvent((int)Events.ReadyToAttack);
-        player.life = player.life - Damage;
-        playerScape = false;
+        if (!player.isDashing())
+        {
+            player.timeDelayStune = delayAttack + 1;
+            player.statePlayer = Player.StatePlayer.Stunt;
+            fsm.SendEvent((int)Events.ReadyToAttack);
+            player.life = player.life - Damage;
+            playerScape = false;
+        }
+       
     }
     public override void Attack()
     {
