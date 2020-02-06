@@ -12,6 +12,7 @@ TagManager:
   - WeaponMelee
   - Bullet
   - CameraVision
+  - HealthBar
   layers:
   - Default
   - TransparentFX

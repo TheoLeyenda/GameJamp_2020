@@ -54,6 +54,8 @@ public class Player : Characther
     private StateMovement stateMovement;
     private Item currentItem;
     public EquipedWeapon equipedWeapon;
+
+    private HealthBar healthBar;
     private enum Direction
     {
         Left,
@@ -88,7 +90,7 @@ public class Player : Characther
     {
         rigidbody = GetComponent<Rigidbody2D>();
         equipedWeapon = EquipedWeapon.Default;
-        auxLife = life;
+        healthBar = GameObject.FindWithTag("HealthBar").GetComponent<HealthBar>(); ;
 
     }
     private void OnGUI()
@@ -359,13 +361,6 @@ public class Player : Characther
         die = true;
     }
 
-    private void checkDash()
-    {
-        if (Input.GetKey(dash))
-        {
-            speedMovement = dashSpeed;
-        }
-    }
     public void CheckItem()
     {
         if (currentItem != null && Input.GetKeyDown(keyAccion))
@@ -406,9 +401,9 @@ public class Player : Characther
             currentItem = null;
         }
     }
-        public void update_life_bar()
+    public void update_life_bar()
     {
-        barDisplay = life / auxLife;
+        healthBar.updateLife(this.life);
     }
 
     private void chekDashing()
