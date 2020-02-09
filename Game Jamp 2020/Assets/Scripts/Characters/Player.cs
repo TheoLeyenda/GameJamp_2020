@@ -55,6 +55,14 @@ public class Player : Characther
     private Item currentItem;
     public EquipedWeapon equipedWeapon;
 
+    [Header("Animacion")]
+    public Animator animator;
+
+    private bool inMovement;
+    private bool jumping;
+    private bool topHigh;
+    private bool jumpEnded;
+
     private HealthBar healthBar;
     private enum Direction
     {
@@ -106,6 +114,7 @@ public class Player : Characther
         CheckStatePlayer();
         CheckWeapon();
         update_life_bar();
+        updateAnimator();
         if (currentItem != null)
         {
             CheckItem();
@@ -215,38 +224,18 @@ public class Player : Characther
         CheckSpeed();
         CheckAnimationMovement();
         chekDashing();
+        chekMovementForAnimation();
         if (statePlayer != StatePlayer.Stunt)
         {
             CheckSpeed();
             CheckAnimationMovement();
             if (Input.GetKey(rightMovement))
             {
-                if (typeMovement == TypeMovement.Force)
-                {
-                    direction = Direction.Right;
-                    rigidbody.AddForce(Vector2.right * speedMovement, ForceMode2D.Force);
-                }
-                else if (typeMovement == TypeMovement.Position)
-                {
-                    direction = Direction.Right;
-                    RightMovement(false);
-
-                }
-                //Debug.Log("right");
+                moveRight();   
             }
             else if (Input.GetKey(leftMovement))
             {
-                if (typeMovement == TypeMovement.Force)
-                {
-                    rigidbody.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
-                    direction = Direction.Left;
-                }
-                else if (typeMovement == TypeMovement.Position)
-                {
-                    LeftMovement(false);
-                    direction = Direction.Left;
-                }
-                //Debug.Log("left");
+                moveLeft();
             }
             if (Input.GetKeyDown(dash) && inFloor)
             {
@@ -264,8 +253,12 @@ public class Player : Characther
                     speedMovement = speedMovement / jampDivide;
                 }
             }
+            if (Input.GetKeyUp(rightMovement) || Input.GetKeyUp(leftMovement))
+            {
+                this.inMovement = false;
+            }
 
-            if (Input.GetKeyDown(JumpMovement) && inFloor)
+                if (Input.GetKeyDown(JumpMovement) && inFloor)
             {
                 rigidbody.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
                 speedMovement = speedMovement / jampDivide;
@@ -286,6 +279,51 @@ public class Player : Characther
                 //Debug.Log(timeDelayStune);
                 timeDelayStune = timeDelayStune -  substractTimeStune;
             }
+        }
+    }
+
+    private void chekMovementForAnimation()
+    {
+        if(Input.GetKeyDown(JumpMovement) && inFloor)
+        {
+            this.jumping = true;
+        }
+
+        if (Input.GetKeyDown(rightMovement) && !jumping)
+        {
+            this.inMovement = true;
+        }
+        else if (Input.GetKeyDown(leftMovement) && !jumping)
+        {
+            this.inMovement = true;
+        }
+    }
+
+    private void moveRight()
+    {
+        if (typeMovement == TypeMovement.Force)
+        {
+            direction = Direction.Right;
+            rigidbody.AddForce(Vector2.right * speedMovement, ForceMode2D.Force);
+        }
+        else if (typeMovement == TypeMovement.Position)
+        {
+            direction = Direction.Right;
+            RightMovement(false);
+        }
+    }
+
+    private void moveLeft()
+    {
+        if (typeMovement == TypeMovement.Force)
+        {
+            rigidbody.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
+            direction = Direction.Left;
+        }
+        else if (typeMovement == TypeMovement.Position)
+        {
+            LeftMovement(false);
+            direction = Direction.Left;
         }
     }
     public void CheckAnimationMovement()
@@ -348,11 +386,21 @@ public class Player : Characther
             inFloor = true;
         }
     }
+
+    private void oncollisionenter2d(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            this.jumping = false;
+        }
+
+    }
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Floor")
         {
             inFloor = false;
+            this.topHigh = false;
         }
     }
 
@@ -416,7 +464,7 @@ public class Player : Characther
                 this.rigidbody.velocity = Vector3.zero;
                 this.rigidbody.angularVelocity = 0;
                 dashing = false;
-                            }
+            }
         }
     }
 
@@ -425,5 +473,19 @@ public class Player : Characther
         return this.dashing;
     }
 
+    private void updateAnimator()
+    {
+        animator.SetBool("jumping", this.jumping);
+        animator.SetBool("dashing", this.dashing);
+        animator.SetBool("onMovement",this.inMovement);
+        animator.SetBool("topHigh", this.topHigh);
+        animator.SetBool("onFloor", this.inFloor);
+
+        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && this.jumping)
+        {
+            this.jumping = false;
+            this.topHigh = true;
+        }
+    }
 
 }
