@@ -62,6 +62,7 @@ public class Player : Characther
     private bool jumping;
     private bool topHigh;
     private bool jumpEnded;
+    private bool isAttacking;
 
     private HealthBar healthBar;
     private enum Direction
@@ -297,6 +298,10 @@ public class Player : Characther
         {
             this.inMovement = true;
         }
+        if (Input.GetKeyDown(keyAttack))
+        {
+            this.isAttacking = true;
+        }
     }
 
     private void moveRight()
@@ -480,11 +485,28 @@ public class Player : Characther
         animator.SetBool("onMovement",this.inMovement);
         animator.SetBool("topHigh", this.topHigh);
         animator.SetBool("onFloor", this.inFloor);
+        if (statePlayer.Equals(StatePlayer.Stunt))
+        {
+            animator.SetBool("isStunned", true);
+        }
+        else
+        {
+            animator.SetBool("isStunned", false);
+        }
 
         if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && this.jumping)
         {
             this.jumping = false;
             this.topHigh = true;
+        }
+        if (this.isAttacking)
+        {
+            animator.SetBool("attack", true);
+            this.isAttacking = false;
+        }
+        else if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Atack"))
+        {
+            animator.SetBool("attack", false);
         }
     }
 
