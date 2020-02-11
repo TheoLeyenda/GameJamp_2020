@@ -13,6 +13,7 @@ TagManager:
   - Bullet
   - CameraVision
   - HealthBar
+  - botones_menu
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Background Image
   - 
   - 
   - 
