@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8399373655685984877}
   - component: {fileID: 8399373655685984876}
   - component: {fileID: 8399373655685984879}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Piso Provisorio
   m_TagString: Floor
   m_Icon: {fileID: 0}

@@ -8,6 +8,8 @@ public class Player : Characther
     public float timeDelayStune;
     public float jampDivide;
     public float substractTimeStune;
+    public float delayUseDash = 1.5f;
+    public float auxDelayUseDash = 1.5f;
     [Header("Controles Jugador")]
     public KeyCode JumpMovement;
     public KeyCode leftMovement;
@@ -20,7 +22,7 @@ public class Player : Characther
     public float QuickSpeed; //Rapido.
     public float NormalSpeed;//Normal.
     public float SlowlySpeed;//Lento.
-    public float dashSpeed;
+    //public float dashSpeed;
 
     [Header("Relacion Vida/Velocidad")]
     public int lifeQuickSpeed;
@@ -38,7 +40,7 @@ public class Player : Characther
     private bool dashing;
     public float delayDash;
     public float auxDelayDash;
-    public float dashMultiplier;
+    public float dashSpeed;
 
     private int timeStartDashing;
 
@@ -239,22 +241,42 @@ public class Player : Characther
             {
                 moveLeft();
             }
-            
-            if (Input.GetKeyDown(dash) && inFloor || dashing)
+            bool dashido = Input.GetKeyDown(dash);
+            if (dashing)
             {
-                timeStartDashing = System.DateTime.Now.Second;
-                dashing = true;
                 animator.Play("Player_Dash");
                 if (direction.Equals(Direction.Right))
                 {
-                    rigidbody.AddForce(Vector2.right * speedJump * dashMultiplier, ForceMode2D.Impulse);
+                    rigidbody.AddForce(Vector2.right * speedJump * dashSpeed, ForceMode2D.Impulse);
                     speedMovement = speedMovement / jampDivide;
                 }
                 else
                 {
-                    rigidbody.AddForce(Vector2.left * speedJump * dashMultiplier, ForceMode2D.Impulse);
+                    rigidbody.AddForce(Vector2.left * speedJump * dashSpeed, ForceMode2D.Impulse);
                     speedMovement = speedMovement / jampDivide;
                 }
+                gameObject.layer = 9;
+            }
+            else if (gameObject.layer != 0)
+            {
+                gameObject.layer = 0;
+            }
+            if (delayUseDash <= 0)
+            {
+                if (dashido && inFloor || dashing)
+                {
+                    timeStartDashing = System.DateTime.Now.Second;
+                    if (dashido)
+                    {
+                        dashing = true;
+                        dashido = false;
+                    }
+                    delayUseDash = auxDelayUseDash;
+                }
+            }
+            else if (delayUseDash > 0)
+            {
+                delayUseDash = delayUseDash - Time.deltaTime;
             }
             if (Input.GetKeyUp(rightMovement) || Input.GetKeyUp(leftMovement))
             {
@@ -581,6 +603,11 @@ public class Player : Characther
     public void DisableJumping()
     {
         jumping = false;
+    }
+    public void DisableDash()
+    {
+        dashing = false;
+        animator.Play("Player_idle");
     }
 
 }

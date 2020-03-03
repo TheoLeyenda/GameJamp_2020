@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.13333334}
   m_FlipX: 0
@@ -142,6 +142,8 @@ MonoBehaviour:
   stateAssasin: 0
   colorWarning: {r: 0.9433962, g: 0.79738045, b: 0.031149892, a: 1}
   spriteRenderer: {fileID: 3474617247551128467}
+  doneDamage: {fileID: 0}
+  reciveDamage: {fileID: 0}
 --- !u!61 &3474617247551128476
 BoxCollider2D:
   m_ObjectHideFlags: 0
