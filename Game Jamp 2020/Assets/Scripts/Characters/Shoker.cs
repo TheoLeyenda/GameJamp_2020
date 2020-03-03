@@ -146,7 +146,7 @@ public class Shoker : Enemy
                 player.life = 0;
             }
             fsm.SendEvent((int)Events.FinishAttack);
-            source.PlayOneShot(doneDamage, volume);
+            //source.PlayOneShot(doneDamage, volume);
         }
         if (Mathf.Abs((transform.position.x - player.transform.position.x)) > distanceChase || Mathf.Abs((transform.position.y - player.transform.position.y)) > distaceY)
         {

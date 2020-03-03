@@ -36,8 +36,10 @@ public class Player : Characther
     public float auxLife;
     private Direction direction;
     private bool dashing;
+    public float delayDash;
+    public float auxDelayDash;
     public float dashMultiplier;
-    public double DashingInbulnerabilityTime;
+
     private int timeStartDashing;
 
     [Header("Armas Melee")]
@@ -139,7 +141,7 @@ public class Player : Characther
         if (currentWeapon != null)
         {
 
-            if (Input.GetKey(keyAttack))
+            if (Input.GetKey(keyAttack) && inFloor)
             {
                 switch (equipedWeapon)
                 {
@@ -149,7 +151,6 @@ public class Player : Characther
                         BrazosDeShokerWeapon.gameObject.SetActive(false);
                         SableAssasinWeapon.gameObject.SetActive(false);
                         RifleTrackerWeapon.gameObject.SetActive(false);
-
                         distaceWeapon = null;
                         currentWeapon = DefaultWeapon;
                         break;
@@ -232,17 +233,18 @@ public class Player : Characther
             CheckAnimationMovement();
             if (Input.GetKey(rightMovement))
             {
-                moveRight();   
+                moveRight();
             }
             else if (Input.GetKey(leftMovement))
             {
                 moveLeft();
             }
-            if (Input.GetKeyDown(dash) && inFloor)
+            
+            if (Input.GetKeyDown(dash) && inFloor || dashing)
             {
-
                 timeStartDashing = System.DateTime.Now.Second;
                 dashing = true;
+                animator.Play("Player_Dash");
                 if (direction.Equals(Direction.Right))
                 {
                     rigidbody.AddForce(Vector2.right * speedJump * dashMultiplier, ForceMode2D.Impulse);
@@ -259,7 +261,7 @@ public class Player : Characther
                 this.inMovement = false;
             }
 
-                if (Input.GetKeyDown(JumpMovement) && inFloor)
+            if (Input.GetKeyDown(JumpMovement) && inFloor)
             {
                 rigidbody.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
                 speedMovement = speedMovement / jampDivide;
@@ -270,17 +272,20 @@ public class Player : Characther
             {
                 speedMovement = auxSpeedMovement;
             }
-
-            
+            if (!jumping && !dashing && !Input.GetKey(leftMovement) && !Input.GetKey(rightMovement) && (!Input.GetKey(keyAttack) && !isAttacking) && inFloor && !Input.GetKey(dash))
+            {
+                animator.Play("Player_idle");
+            }
         }
         else
         {
             if (Input.GetKeyDown(keyAccion))
             {
                 //Debug.Log(timeDelayStune);
-                timeDelayStune = timeDelayStune -  substractTimeStune;
+                timeDelayStune = timeDelayStune - substractTimeStune;
             }
         }
+        
     }
 
     private void chekMovementForAnimation()
@@ -288,6 +293,8 @@ public class Player : Characther
         if(Input.GetKeyDown(JumpMovement) && inFloor)
         {
             this.jumping = true;
+            animator.SetTrigger("Jump");
+            animator.Play("Player_Jump");
         }
 
         if (Input.GetKeyDown(rightMovement) && !jumping)
@@ -310,11 +317,36 @@ public class Player : Characther
         {
             direction = Direction.Right;
             rigidbody.AddForce(Vector2.right * speedMovement, ForceMode2D.Force);
+            if (inFloor && !jumping && !isAttacking)
+            {
+                animator.Play("Player_Run");
+            }
         }
         else if (typeMovement == TypeMovement.Position)
         {
             direction = Direction.Right;
-            RightMovement(false);
+            if (inFloor && !isAttacking)
+            {
+                RightMovement(false);
+            }
+            else if (!inFloor && isAttacking)
+            {
+                RightMovement(false);
+            }
+            else if (!inFloor && !isAttacking)
+            {
+                RightMovement(false);
+            }
+            else if (Input.GetKeyDown(JumpMovement))
+            {
+                this.jumping = true;
+                animator.SetTrigger("Jump");
+                animator.Play("Player_Jump");
+            }
+            if (inFloor && !jumping && !isAttacking)
+            {
+                animator.Play("Player_Run");
+            }
         }
     }
 
@@ -324,11 +356,36 @@ public class Player : Characther
         {
             rigidbody.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
             direction = Direction.Left;
+            if (inFloor && !jumping && !isAttacking)
+            {
+                animator.Play("Player_Run");
+            }
         }
         else if (typeMovement == TypeMovement.Position)
         {
-            LeftMovement(false);
+            if (inFloor && !isAttacking)
+            {
+                LeftMovement(false);
+            }
+            else if (!inFloor && isAttacking)
+            {
+                LeftMovement(false);
+            }
+            else if (!inFloor && !isAttacking)
+            {
+                LeftMovement(false);
+            }
+            else if (Input.GetKeyDown(JumpMovement))
+            {
+                this.jumping = true;
+                animator.SetTrigger("Jump");
+                animator.Play("Player_Jump");
+            }
             direction = Direction.Left;
+            if (inFloor && !jumping && !isAttacking)
+            {
+                animator.Play("Player_Run");
+            }
         }
     }
     public void CheckAnimationMovement()
@@ -389,15 +446,16 @@ public class Player : Characther
         if (collision.gameObject.tag == "Floor")
         {
             inFloor = true;
+            this.jumping = false;
         }
     }
 
     private void oncollisionenter2d(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        /*if (collision.gameObject.tag == "Floor")
         {
             this.jumping = false;
-        }
+        }*/
 
     }
     private void OnCollisionExit2D(Collision2D collision)
@@ -463,12 +521,14 @@ public class Player : Characther
     {
         if (dashing)
         {
-            float timeDashing = System.DateTime.Now.Second - timeStartDashing;
-            if (timeDashing > DashingInbulnerabilityTime)
+            delayDash = delayDash - Time.deltaTime;
+            if (delayDash <= 0)
             {
                 this.rigidbody.velocity = Vector3.zero;
                 this.rigidbody.angularVelocity = 0;
                 dashing = false;
+                //animator.Play("Player_idle");
+                delayDash = auxDelayDash;
             }
         }
     }
@@ -480,34 +540,47 @@ public class Player : Characther
 
     private void updateAnimator()
     {
-        animator.SetBool("jumping", this.jumping);
+        /*animator.SetBool("jumping", this.jumping);
         animator.SetBool("dashing", this.dashing);
         animator.SetBool("onMovement",this.inMovement);
         animator.SetBool("topHigh", this.topHigh);
         animator.SetBool("onFloor", this.inFloor);
+        */
         if (statePlayer.Equals(StatePlayer.Stunt))
         {
-            animator.SetBool("isStunned", true);
+            animator.Play("Player_Stuned");
         }
-        else
+        /*else
         {
             animator.SetBool("isStunned", false);
         }
-
-        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && this.jumping)
+        */
+        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && this.jumping || topHigh)
         {
-            this.jumping = false;
+            //this.jumping = false;
             this.topHigh = true;
+            animator.Play("Player_OnAir");
+
         }
-        if (this.isAttacking)
+        if ((Input.GetKeyDown(keyAttack) || isAttacking) && statePlayer != StatePlayer.Stunt && inFloor)
         {
-            animator.SetBool("attack", true);
-            this.isAttacking = false;
+            animator.Play("Player_Atack");
+            this.isAttacking = true;
         }
-        else if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Atack"))
+        /*else if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Atack"))
         {
-            animator.SetBool("attack", false);
-        }
+            animator.Play("Player_idle");
+          
+        }*/
+        
+    }
+    public void DisableIsAttack()
+    {
+        isAttacking = false;
+    }
+    public void DisableJumping()
+    {
+        jumping = false;
     }
 
 }
