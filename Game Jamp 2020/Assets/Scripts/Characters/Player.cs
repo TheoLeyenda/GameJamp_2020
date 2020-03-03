@@ -10,6 +10,8 @@ public class Player : Characther
     public float substractTimeStune;
     public float delayUseDash = 1.5f;
     public float auxDelayUseDash = 1.5f;
+    public float delayHealling = 1;
+    public float auxDelayHealling = 1;
     [Header("Controles Jugador")]
     public KeyCode JumpMovement;
     public KeyCode leftMovement;
@@ -36,6 +38,7 @@ public class Player : Characther
     Vector2 size = new Vector2(100, 30);
     public float barDisplay;
     public float auxLife;
+    public float maxLife;
     private Direction direction;
     private bool dashing;
     public float delayDash;
@@ -97,14 +100,14 @@ public class Player : Characther
     {
         none,
         Stunt,
+        InHealling,
     }
     public StatePlayer statePlayer;
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         equipedWeapon = EquipedWeapon.Default;
-        healthBar = GameObject.FindWithTag("HealthBar").GetComponent<HealthBar>(); ;
-
+        healthBar = GameObject.FindWithTag("HealthBar").GetComponent<HealthBar>();
     }
     private void OnGUI()
     {
@@ -114,6 +117,7 @@ public class Player : Characther
     // Update is called once per frame
     void Update()
     {
+        CheckHealling();
         Movement();
         CheckDie();
         CheckStatePlayer();
@@ -294,7 +298,7 @@ public class Player : Characther
             {
                 speedMovement = auxSpeedMovement;
             }
-            if (!jumping && !dashing && !Input.GetKey(leftMovement) && !Input.GetKey(rightMovement) && (!Input.GetKey(keyAttack) && !isAttacking) && inFloor && !Input.GetKey(dash))
+            if (statePlayer != StatePlayer.InHealling && !jumping && !dashing && !Input.GetKey(leftMovement) && !Input.GetKey(rightMovement) && (!Input.GetKey(keyAttack) && !isAttacking) && inFloor && !Input.GetKey(dash))
             {
                 animator.Play("Player_idle");
             }
@@ -327,7 +331,7 @@ public class Player : Characther
         {
             this.inMovement = true;
         }
-        if (Input.GetKeyDown(keyAttack))
+        if (Input.GetKeyDown(keyAttack) && statePlayer != StatePlayer.Stunt)
         {
             this.isAttacking = true;
         }
@@ -463,6 +467,19 @@ public class Player : Characther
     {
         return stateMovement;
     }
+    public void CheckHealling()
+    {
+        if (delayHealling > 0 && statePlayer == StatePlayer.InHealling)
+        {
+            delayHealling = delayHealling - Time.deltaTime;
+        }
+        else if (delayHealling <= 0 && statePlayer == StatePlayer.InHealling)
+        {
+            statePlayer = StatePlayer.none;
+            gameObject.layer = 0;
+            //animator.Play("Player_idle");
+        }
+    }
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Floor")
@@ -470,8 +487,8 @@ public class Player : Characther
             inFloor = true;
             this.jumping = false;
         }
+        
     }
-
     private void oncollisionenter2d(Collision2D collision)
     {
         /*if (collision.gameObject.tag == "Floor")
@@ -525,6 +542,28 @@ public class Player : Characther
         if (collision.tag == "Item")
         {
             currentItem = collision.GetComponent<Item>();
+        }
+        if (collision.gameObject.tag == "Basurero")
+        {
+            
+            if (Input.GetKeyDown(keyAccion) && statePlayer != StatePlayer.Stunt)
+            {
+               
+                statePlayer = StatePlayer.InHealling;
+                delayHealling = auxDelayHealling;
+                gameObject.layer = 9;
+                Basurero basurero = collision.gameObject.GetComponent<Basurero>();
+                if (life < maxLife)
+                {
+                    life = life + basurero.countLifeRecover;
+                    if (life > maxLife)
+                    {
+                        life = maxLife;
+                    }
+                    Debug.Log("ENTRE");
+                    animator.SetTrigger("EntrarAlTacho");
+                }
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

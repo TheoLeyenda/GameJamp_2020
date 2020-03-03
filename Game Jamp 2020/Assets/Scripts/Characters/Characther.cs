@@ -8,7 +8,8 @@ public class Characther : MonoBehaviour
     protected float auxSpeedMovement;
     public float speedJump;
     public float life;
-    protected bool inFloor;
+    [HideInInspector]
+    public bool inFloor;
     protected bool die;
     [HideInInspector]
     public Rigidbody2D rig2D;

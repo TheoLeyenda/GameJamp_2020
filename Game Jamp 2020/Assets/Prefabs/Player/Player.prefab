@@ -815,11 +815,16 @@ MonoBehaviour:
   speedMovement: 10
   speedJump: 13
   life: 100
+  inFloor: 0
   rig2D: {fileID: 0}
   RunVelocity: 0
   timeDelayStune: 2
   jampDivide: 2
   substractTimeStune: 2
+  delayUseDash: 0
+  auxDelayUseDash: 1.5
+  delayHealling: 1
+  auxDelayHealling: 1
   JumpMovement: 119
   leftMovement: 97
   rightMovement: 100
@@ -829,17 +834,17 @@ MonoBehaviour:
   QuickSpeed: 10
   NormalSpeed: 10
   SlowlySpeed: 3
-  dashSpeed: 0
   lifeQuickSpeed: 80
   lifeNormalSpeed: 60
   lifeSlowlySpeed: 30
   rigidbody: {fileID: 0}
   typeMovement: 1
   barDisplay: 0
-  auxLife: 0
-  delayDash: 0.1
-  auxDelayDash: 0.1
-  dashMultiplier: 1
+  auxLife: 100
+  maxLife: 100
+  delayDash: 0.125
+  auxDelayDash: 0.125
+  dashSpeed: 1
   DefaultWeapon: {fileID: 2051860408}
   BrazosDeShokerWeapon: {fileID: 206545501}
   SableAssasinWeapon: {fileID: 219765653}
