@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Characther
 {
     // Start is called before the first frame update
+    public static Player instancePlayer;
     public float timeDelayStune;
     public float jampDivide;
     public float substractTimeStune;
@@ -105,6 +106,17 @@ public class Player : Characther
         InHealling,
     }
     public StatePlayer statePlayer;
+    private void Awake()
+    {
+        // if the singleton hasn't been initialized yet
+        if (instancePlayer != null && instancePlayer != this)
+        {
+            Destroy(this.gameObject);
+        }
+
+        instancePlayer = this;
+        //DontDestroyOnLoad(this.gameObject);
+    }
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();

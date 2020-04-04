@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class Bullets : MonoBehaviour
 {
     // Start is called before the first frame update
+    private Player referencePlayer;
+    public bool ChasePlayer;
     public float speed;
     public float minDamage;
     public float Damage;
@@ -20,6 +22,7 @@ public class Bullets : MonoBehaviour
 
     private void Start()
     {
+        referencePlayer = Player.instancePlayer;
         rotation = Vector3.zero;
     }
     private void Update()
@@ -65,7 +68,32 @@ public class Bullets : MonoBehaviour
     }
     public void Movement( Vector2 dir)
     {
-        transform.position = transform.position + new Vector3(speed * dir.x, 0, 0) * Time.deltaTime;
+        if (ChasePlayer)
+        {
+            if(referencePlayer != null)
+            {
+                if(referencePlayer.transform.position.y < transform.position.y)
+                {
+                    transform.position = transform.position - new Vector3(0, speed, 0) * Time.deltaTime;
+                }
+                if(referencePlayer.transform.position.y > transform.position.y)
+                {
+                    transform.position = transform.position + new Vector3(0, speed, 0) * Time.deltaTime;
+                }
+                if(referencePlayer.transform.position.x > transform.position.x)
+                {
+                    transform.position = transform.position + new Vector3(speed, 0, 0) * Time.deltaTime;
+                }
+                if(referencePlayer.transform.position.x < transform.position.x)
+                {
+                    transform.position = transform.position - new Vector3(speed, 0, 0) * Time.deltaTime;
+                }
+            }
+        }
+        else
+        {
+            transform.position = transform.position + new Vector3(speed * dir.x, 0, 0) * Time.deltaTime;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

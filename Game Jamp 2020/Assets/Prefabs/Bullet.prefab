@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -95,7 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1122ad81c57a66419d458fdf7b06303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  ChasePlayer: 1
+  speed: 7.5
   minDamage: 25
   Damage: 120
   speedSubstractDamage: 60
@@ -103,7 +104,7 @@ MonoBehaviour:
   Scale: 5
   minScale: 1
   rotation: {x: 0, y: 180, z: 0}
-  timeLife: 5
+  timeLife: 3
   tagShooter: 
   enableMovement: 1
 --- !u!58 &6491069370084027837
