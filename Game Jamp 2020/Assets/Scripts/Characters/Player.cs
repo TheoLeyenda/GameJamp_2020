@@ -62,6 +62,8 @@ public class Player : Characther
     private Item currentItem;
     public EquipedWeapon equipedWeapon;
 
+    public GameObject spawnObject;
+
     [Header("Animacion")]
     public Animator animator;
 
@@ -221,8 +223,17 @@ public class Player : Characther
         CheckDead();
         if (die)
         {
-            gameObject.SetActive(false);
-            transform.position = new Vector3(-1000, -1000, -1000);
+            if (spawnObject != null)
+            {
+                life = maxLife;
+                transform.position = spawnObject.transform.position;
+                die = false;
+            }
+            else
+            {
+                gameObject.SetActive(false);
+                transform.position = new Vector3(-1000, -1000, -1000);
+            }
         }
     }
     public override void Movement()

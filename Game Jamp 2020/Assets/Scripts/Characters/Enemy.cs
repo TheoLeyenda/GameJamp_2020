@@ -83,7 +83,8 @@ public class Enemy : Characther
             ChageDirection();
         }
         RaycastHit2D raycastHit = Physics2D.Raycast(new Vector2(transform.position.x + (transform.right.x * 1.5f), transform.position.y), Vector2.down, distaceDectectedFloor);
-        if (raycastHit.collider != null)
+        RaycastHit2D raycastHit2 = Physics2D.Raycast(new Vector2(transform.position.x + (transform.right.x * 1f), transform.position.y), transform.forward, 1.5f);
+        if (raycastHit.collider != null )
         {
             if (raycastHit.collider.tag != "Floor")
             {
@@ -93,6 +94,13 @@ public class Enemy : Characther
         else
         {
             ChageDirection();
+        }
+        if(raycastHit2.collider != null)
+        {
+            if(raycastHit.collider.tag == "Floor")
+            {
+                ChageDirection();
+            }
         }
     }
     public void ChageDirection()
