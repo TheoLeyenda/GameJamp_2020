@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChasePlayer: 1
-  speed: 7.5
+  speed: 7
   minDamage: 25
   Damage: 120
   speedSubstractDamage: 60

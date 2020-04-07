@@ -15,6 +15,7 @@ TagManager:
   - HealthBar
   - botones_menu
   - Basurero
+  - Mine
   layers:
   - Default
   - TransparentFX

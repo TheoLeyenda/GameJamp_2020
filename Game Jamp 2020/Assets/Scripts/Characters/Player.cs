@@ -74,6 +74,7 @@ public class Player : Characther
     private bool jumpEnded;
     private bool isAttacking;
 
+    private bool enableMovement;
     private HealthBar healthBar;
     private enum Direction
     {
@@ -122,6 +123,7 @@ public class Player : Characther
         rigidbody = GetComponent<Rigidbody2D>();
         equipedWeapon = EquipedWeapon.Default;
         healthBar = GameObject.FindWithTag("HealthBar").GetComponent<HealthBar>();
+        enableMovement = true;
     }
     private void OnGUI()
     {
@@ -240,98 +242,103 @@ public class Player : Characther
                 life = maxLife;
                 transform.position = spawnObject.transform.position;
                 die = false;
+                enableMovement = true;
             }
             else
             {
                 gameObject.SetActive(false);
                 transform.position = new Vector3(-1000, -1000, -1000);
+                enableMovement = true;
             }
         }
     }
     public override void Movement()
     {
-        //float vertical = Input.GetAxis("Vertical");
-        //Debug.Log(speedMovement);
-        CheckSpeed();
-        CheckAnimationMovement();
-        chekDashing();
-        chekMovementForAnimation();
-        if (statePlayer != StatePlayer.Stunt)
+        if (enableMovement)
         {
+            //float vertical = Input.GetAxis("Vertical");
+            //Debug.Log(speedMovement);
             CheckSpeed();
             CheckAnimationMovement();
-            if (Input.GetKey(rightMovement))
+            chekDashing();
+            chekMovementForAnimation();
+            if (statePlayer != StatePlayer.Stunt)
             {
-                moveRight();
-            }
-            else if (Input.GetKey(leftMovement))
-            {
-                moveLeft();
-            }
-            bool dashido = Input.GetKeyDown(dash);
-            if (dashing)
-            {
-                animator.Play("Player_Dash");
-                if (direction.Equals(Direction.Right))
+                CheckSpeed();
+                CheckAnimationMovement();
+                if (Input.GetKey(rightMovement))
                 {
-                    rigidbody.AddForce(Vector2.right * speedJump * dashSpeed, ForceMode2D.Impulse);
-                    speedMovement = speedMovement / jampDivide;
+                    moveRight();
                 }
-                else
+                else if (Input.GetKey(leftMovement))
                 {
-                    rigidbody.AddForce(Vector2.left * speedJump * dashSpeed, ForceMode2D.Impulse);
-                    speedMovement = speedMovement / jampDivide;
+                    moveLeft();
                 }
-                gameObject.layer = 9;
-            }
-            else if (gameObject.layer != 0)
-            {
-                gameObject.layer = 0;
-            }
-            if (delayUseDash <= 0)
-            {
-                if (dashido && inFloor || dashing)
+                bool dashido = Input.GetKeyDown(dash);
+                if (dashing)
                 {
-                    timeStartDashing = System.DateTime.Now.Second;
-                    if (dashido)
+                    animator.Play("Player_Dash");
+                    if (direction.Equals(Direction.Right))
                     {
-                        dashing = true;
-                        dashido = false;
+                        rigidbody.AddForce(Vector2.right * speedJump * dashSpeed, ForceMode2D.Impulse);
+                        speedMovement = speedMovement / jampDivide;
                     }
-                    delayUseDash = auxDelayUseDash;
+                    else
+                    {
+                        rigidbody.AddForce(Vector2.left * speedJump * dashSpeed, ForceMode2D.Impulse);
+                        speedMovement = speedMovement / jampDivide;
+                    }
+                    gameObject.layer = 9;
+                }
+                else if (gameObject.layer != 0)
+                {
+                    gameObject.layer = 0;
+                }
+                if (delayUseDash <= 0)
+                {
+                    if (dashido && inFloor || dashing)
+                    {
+                        timeStartDashing = System.DateTime.Now.Second;
+                        if (dashido)
+                        {
+                            dashing = true;
+                            dashido = false;
+                        }
+                        delayUseDash = auxDelayUseDash;
+                    }
+                }
+                else if (delayUseDash > 0)
+                {
+                    delayUseDash = delayUseDash - Time.deltaTime;
+                }
+                if (Input.GetKeyUp(rightMovement) || Input.GetKeyUp(leftMovement))
+                {
+                    this.inMovement = false;
+                }
+
+                if (Input.GetKeyDown(JumpMovement) && inFloor)
+                {
+                    rigidbody.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
+                    speedMovement = speedMovement / jampDivide;
+                    inFloor = false;
+                    //Debug.Log("Up");
+                }
+                else if (inFloor && !Input.GetKeyDown(JumpMovement))
+                {
+                    speedMovement = auxSpeedMovement;
+                }
+                if (statePlayer != StatePlayer.InHealling && !jumping && !dashing && !Input.GetKey(leftMovement) && !Input.GetKey(rightMovement) && (!Input.GetKey(keyAttack) && !isAttacking) && inFloor && !Input.GetKey(dash))
+                {
+                    animator.Play("Player_idle");
                 }
             }
-            else if (delayUseDash > 0)
+            else
             {
-                delayUseDash = delayUseDash - Time.deltaTime;
-            }
-            if (Input.GetKeyUp(rightMovement) || Input.GetKeyUp(leftMovement))
-            {
-                this.inMovement = false;
-            }
-
-            if (Input.GetKeyDown(JumpMovement) && inFloor)
-            {
-                rigidbody.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
-                speedMovement = speedMovement / jampDivide;
-                inFloor = false;
-                //Debug.Log("Up");
-            }
-            else if (inFloor && !Input.GetKeyDown(JumpMovement))
-            {
-                speedMovement = auxSpeedMovement;
-            }
-            if (statePlayer != StatePlayer.InHealling && !jumping && !dashing && !Input.GetKey(leftMovement) && !Input.GetKey(rightMovement) && (!Input.GetKey(keyAttack) && !isAttacking) && inFloor && !Input.GetKey(dash))
-            {
-                animator.Play("Player_idle");
-            }
-        }
-        else
-        {
-            if (Input.GetKeyDown(keyAccion))
-            {
-                //Debug.Log(timeDelayStune);
-                timeDelayStune = timeDelayStune - substractTimeStune;
+                if (Input.GetKeyDown(keyAccion))
+                {
+                    //Debug.Log(timeDelayStune);
+                    timeDelayStune = timeDelayStune - substractTimeStune;
+                }
             }
         }
         
@@ -559,6 +566,10 @@ public class Player : Characther
                     break;
             }
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        //si resivo daño de algun tipo con proyectil o trampa que ejecute la animacion de daño.
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
