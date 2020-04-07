@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//GUARDATRES
+
 public class Characther : MonoBehaviour
 {
     public float speedMovement;
