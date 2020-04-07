@@ -18,7 +18,7 @@ public class Pause : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Pausa");
+            //Debug.Log("Pausa");
             pause = !pause;
             if (pause)
             {
