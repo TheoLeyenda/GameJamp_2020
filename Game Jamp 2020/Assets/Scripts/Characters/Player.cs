@@ -134,26 +134,29 @@ public class Player : Characther
     void Update()
     {
         CheckHealling();
-        Movement();
-        CheckDie();
-        CheckStatePlayer();
-        CheckWeapon();
-        update_life_bar();
-        updateAnimator();
-        if (currentItem != null)
+        if (enableMovement)
         {
-            CheckItem();
-        }
-        if (equipedWeapon == EquipedWeapon.RifleTracker)
-        {
-            if (Input.GetKeyDown(keyAttack))
+            Movement();
+            CheckDie();
+            CheckStatePlayer();
+            CheckWeapon();
+            update_life_bar();
+            updateAnimator();
+            if (currentItem != null)
             {
-                distaceWeapon.ShootWeapon();
-                currentWeapon.CountUse--;
-                distaceWeapon.CountUse--;
-                if (currentWeapon.CountUse <= 0 || distaceWeapon.CountUse <= 0)
+                CheckItem();
+            }
+            if (equipedWeapon == EquipedWeapon.RifleTracker)
+            {
+                if (Input.GetKeyDown(keyAttack))
                 {
-                    equipedWeapon = EquipedWeapon.Default;
+                    distaceWeapon.ShootWeapon();
+                    currentWeapon.CountUse--;
+                    distaceWeapon.CountUse--;
+                    if (currentWeapon.CountUse <= 0 || distaceWeapon.CountUse <= 0)
+                    {
+                        equipedWeapon = EquipedWeapon.Default;
+                    }
                 }
             }
         }
@@ -412,7 +415,7 @@ public class Player : Characther
         {
             rigidbody.AddForce(Vector2.left * speedMovement, ForceMode2D.Force);
             direction = Direction.Left;
-            if (inFloor && !jumping && !isAttacking)
+            if (inFloor && !jumping && !isAttacking && enableMovement)
             {
                 animator.Play("Player_Run");
             }
@@ -438,7 +441,7 @@ public class Player : Characther
                 animator.Play("Player_Jump");
             }
             direction = Direction.Left;
-            if (inFloor && !jumping && !isAttacking)
+            if (inFloor && !jumping && !isAttacking && enableMovement)
             {
                 animator.Play("Player_Run");
             }
@@ -582,7 +585,7 @@ public class Player : Characther
             
             if (Input.GetKeyDown(keyAccion) && statePlayer != StatePlayer.Stunt)
             {
-               
+                enableMovement = false;
                 statePlayer = StatePlayer.InHealling;
                 delayHealling = auxDelayHealling;
                 gameObject.layer = 9;
@@ -594,7 +597,7 @@ public class Player : Characther
                     {
                         life = maxLife;
                     }
-                    Debug.Log("ENTRE");
+                    //Debug.Log("ENTRE");
                     animator.SetTrigger("EntrarAlTacho");
                 }
             }
@@ -682,5 +685,12 @@ public class Player : Characther
         dashing = false;
         animator.Play("Player_idle");
     }
-
+    public void ActivateMovement()
+    {
+        enableMovement = true;
+    }
+    public void DisableMovement()
+    {
+        enableMovement = false;
+    }
 }
