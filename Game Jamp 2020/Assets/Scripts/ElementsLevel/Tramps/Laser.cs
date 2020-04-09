@@ -2,48 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Laser : Enemy
+public class Laser : MonoBehaviour
 {
-    public enum states
+    // Start is called before the first frame update
+    public float delayPrendido;
+    public float delayApagado;
+    public Animator animator;
+    private float auxDelayPrendido;
+    private float auxDelayApagado;
+    private StateLaser stateLaser;
+    private enum StateLaser
     {
-        patrol,
-        deactivate,
-        alarm,
-        count
+        Off,
+        On,
     }
-    public enum events
+    void Start()
     {
-        unresponsive,
-        detect,
-        count
+        auxDelayApagado = delayApagado;
+        auxDelayPrendido = delayPrendido;
+        delayPrendido = 0;
+        stateLaser = StateLaser.Off;
     }
-    private void Awake()
+    public void CheckStateLaser()
     {
-        fsm = new FSM((int)states.count,(int)events.count,(int)states.patrol);
-        fsm.SetRelations((int)states.patrol, (int)states.deactivate, (int)events.unresponsive);
-        fsm.SetRelations((int)states.alarm,(int)states.alarm,(int)events.detect);
-        fsm.SetRelations((int)states.deactivate, (int)states.deactivate, (int)events.unresponsive);
 
     }
-
-    protected override void Update()
+    // Update is called once per frame
+    void Update()
     {
-        switch (fsm.GetCurrentState())
-        {
-            case (int)states.patrol:
-                {
-
-                }break;
-            case (int)states.deactivate:
-                {
-
-                }break;
-            case (int)states.alarm:
-                {
-
-                }break;
-            
-        }
+        CheckStateLaser();
     }
-
 }
