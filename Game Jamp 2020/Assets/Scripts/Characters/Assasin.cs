@@ -45,19 +45,26 @@ public class Assasin : Enemy
     protected override void Update()
     {
         CheckDead();
-        if (patrol)
+        if (stateEnemy != StateEnemy.Stunt)
         {
-            if (enableMovement)
+            if (patrol)
             {
-                Movement();
+                if (enableMovement)
+                {
+                    Movement();
+                }
+            }
+            if (player != null)
+            {
+                ChasePlayer();
+                CheckDodge();
+                CheckAttackMine();
+                CheckCollider();
             }
         }
-        if (player != null)
+        else
         {
-            ChasePlayer();
-            CheckDodge();
-            CheckAttackMine();
-            CheckCollider();
+            //ANIMACION STUNE
         }
     }
     public void ChasePlayer()

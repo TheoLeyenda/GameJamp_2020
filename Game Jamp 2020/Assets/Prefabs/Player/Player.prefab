@@ -741,7 +741,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 1789e8a595248114a83b81be6a23238d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -852,6 +852,7 @@ MonoBehaviour:
   currentWeapon: {fileID: 2051860408}
   distaceWeapon: {fileID: 0}
   equipedWeapon: 0
+  spawnObject: {fileID: 0}
   animator: {fileID: 579967911}
   statePlayer: 0
 --- !u!114 &2066868252

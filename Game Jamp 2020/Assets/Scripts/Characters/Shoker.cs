@@ -61,37 +61,44 @@ public class Shoker : Enemy
     protected override void Update()
     {
         CheckDead();
-        switch (fsm.GetCurrentState())
+        if (stateEnemy != StateEnemy.Stunt)
         {
-            case (int)States.Patrol:
-                checkDirection = true;
-                if (enableMovement)
-                {
-                    Movement();
-                }
-                Patrol();
-                //Debug.Log("Patrol");
-                break;
-            case (int)States.Chase:
-                checkDirection = false;
-                
-                //Debug.Log("Chase");
-                Chase();
-                break;
-            case (int)States.Stunt:
-                checkDirection = false;
-                Stunt();
-                //Debug.Log("Stunt");
-                break;
-            case (int)States.Attack:
-                Attack();
-                checkDirection = false;
-                //Debug.Log("Attack");
-                break;
-            case (int)States.Stay:
-                checkDirection = false;
-                //Debug.Log("Stay");
-                break;
+            switch (fsm.GetCurrentState())
+            {
+                case (int)States.Patrol:
+                    checkDirection = true;
+                    if (enableMovement)
+                    {
+                        Movement();
+                    }
+                    Patrol();
+                    //Debug.Log("Patrol");
+                    break;
+                case (int)States.Chase:
+                    checkDirection = false;
+
+                    //Debug.Log("Chase");
+                    Chase();
+                    break;
+                case (int)States.Stunt:
+                    checkDirection = false;
+                    Stunt();
+                    //Debug.Log("Stunt");
+                    break;
+                case (int)States.Attack:
+                    Attack();
+                    checkDirection = false;
+                    //Debug.Log("Attack");
+                    break;
+                case (int)States.Stay:
+                    checkDirection = false;
+                    //Debug.Log("Stay");
+                    break;
+            }
+        }
+        else
+        {
+            //ANIMACION STUNE
         }
     }
     public void Chase()

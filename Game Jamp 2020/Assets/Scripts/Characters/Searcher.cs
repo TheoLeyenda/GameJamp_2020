@@ -39,14 +39,21 @@ public class Searcher : Enemy
     protected override void Update()
     {
         CheckDead();
-        if (player != null)
+        if (stateEnemy != StateEnemy.Stunt)
         {
-            CheckPlayerInRange();
-            CheckShoot();
+            if (player != null)
+            {
+                CheckPlayerInRange();
+                CheckShoot();
+            }
+            else
+            {
+                Debug.Log(player);
+            }
         }
         else
         {
-            Debug.Log(player);
+            //ANIMACION STUNE
         }
     }
     public void CheckPlayerInRange()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : Characther
 {
     // Start is called before the first frame update
+    public float timeDelayStune;
     public float Damage;
     public float distanceAttack;
     public float distanceChase;
@@ -20,7 +21,8 @@ public class Enemy : Characther
     protected Vector2 DistanceVector;
     public GameObject DropItem;
     public GameObject generatorCadaver;
-
+    [HideInInspector]
+    public StateEnemy stateEnemy;
     [SerializeField]
     protected StateMovement stateMovement;
     public enum StateMovement
@@ -29,11 +31,20 @@ public class Enemy : Characther
         Right,
         Jump,
     }
+    public enum StateEnemy
+    {
+        none,
+        Stunt,
+    }
     protected virtual void Update()
     {
-        if (enableMovement)
+        if (enableMovement && stateEnemy != StateEnemy.Stunt)
         {
             Movement();
+        }
+        else if(stateEnemy == StateEnemy.Stunt)
+        {
+            //ANIMACION STUNE
         }
     }
     
@@ -100,6 +111,21 @@ public class Enemy : Characther
             if(raycastHit.collider.tag == "Floor")
             {
                 ChageDirection();
+            }
+        }
+    }
+
+    public void CheckStateEnemy()
+    {
+        if (stateEnemy == StateEnemy.Stunt)
+        {
+            if (timeDelayStune > 0)
+            {
+                timeDelayStune = timeDelayStune - Time.deltaTime;
+            }
+            else if (timeDelayStune <= 0)
+            {
+                stateEnemy = StateEnemy.none;
             }
         }
     }
