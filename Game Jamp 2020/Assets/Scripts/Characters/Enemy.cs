@@ -25,6 +25,8 @@ public class Enemy : Characther
     public StateEnemy stateEnemy;
     [SerializeField]
     protected StateMovement stateMovement;
+    public Animator animator;
+    public bool evitarTrampas;
     public enum StateMovement
     {
         Left,
@@ -36,8 +38,14 @@ public class Enemy : Characther
         none,
         Stunt,
     }
+    protected override void Start()
+    {
+        base.Start();
+        animator.SetBool("Idle", true);
+    }
     protected virtual void Update()
     {
+        CheckStateEnemy();
         if (enableMovement && stateEnemy != StateEnemy.Stunt)
         {
             Movement();
@@ -45,6 +53,8 @@ public class Enemy : Characther
         else if(stateEnemy == StateEnemy.Stunt)
         {
             //ANIMACION STUNE
+            animator.Play("Stune");
+            animator.SetBool("Idle", false);
         }
     }
     
@@ -95,16 +105,22 @@ public class Enemy : Characther
         }
         RaycastHit2D raycastHit = Physics2D.Raycast(new Vector2(transform.position.x + (transform.right.x * 1.5f), transform.position.y), Vector2.down, distaceDectectedFloor);
         RaycastHit2D raycastHit2 = Physics2D.Raycast(new Vector2(transform.position.x + (transform.right.x * 1f), transform.position.y), transform.forward, 1.5f);
-        if (raycastHit.collider != null )
+        if (raycastHit.collider != null)
         {
-            if (raycastHit.collider.tag != "Floor")
+            if (!evitarTrampas)
             {
-                ChageDirection();
+                if (raycastHit.collider.tag != "Floor" && raycastHit.collider.tag != "CharcoElectrico" && raycastHit.collider.tag != "Mine")
+                {
+                    ChageDirection();
+                }
             }
-        }
-        else
-        {
-            ChageDirection();
+            else
+            {
+                if (raycastHit.collider.tag != "Floor")
+                {
+                    ChageDirection();
+                }
+            }
         }
         if(raycastHit2.collider != null)
         {
@@ -126,6 +142,7 @@ public class Enemy : Characther
             else if (timeDelayStune <= 0)
             {
                 stateEnemy = StateEnemy.none;
+                animator.SetBool("Idle", true);
             }
         }
     }

@@ -119,8 +119,9 @@ public class Player : Characther
         instancePlayer = this;
         //DontDestroyOnLoad(this.gameObject);
     }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         rigidbody = GetComponent<Rigidbody2D>();
         equipedWeapon = EquipedWeapon.Default;
         healthBar = GameObject.FindWithTag("HealthBar").GetComponent<HealthBar>();
@@ -135,6 +136,7 @@ public class Player : Characther
     void Update()
     {
         CheckHealling();
+        CheckLife(maxLife);
         if (enableMovement)
         {
             Movement();
@@ -498,6 +500,7 @@ public class Player : Characther
     {
         return stateMovement;
     }
+
     public void CheckHealling()
     {
         if (delayHealling > 0 && statePlayer == StatePlayer.InHealling)

@@ -16,6 +16,7 @@ TagManager:
   - botones_menu
   - Basurero
   - Mine
+  - CharcoElectrico
   layers:
   - Default
   - TransparentFX

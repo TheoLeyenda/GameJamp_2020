@@ -95,20 +95,11 @@ public class CharcoElectrico : MonoBehaviour
             if (collision.tag == "Enemy")
             {
                 Enemy e = collision.GetComponent<Enemy>();
-                
+                e.timeDelayStune = timeStunt;
+                e.stateEnemy = Enemy.StateEnemy.Stunt;
+                e.life = e.life - damage;
+                inStuned = true;
             }
         }
     }
-    /*public void Stunt()
-    {
-        if (!player.isDashing())
-        {
-            player.timeDelayStune = delayAttack + 1;
-            player.statePlayer = Player.StatePlayer.Stunt;
-            fsm.SendEvent((int)Events.ReadyToAttack);
-            player.life = player.life - Damage;
-            playerScape = false;
-        }
-
-    }*/
 }

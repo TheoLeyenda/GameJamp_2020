@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_Stuned
+  m_Name: Stune
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,13 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: b2db8d7a6bc9a694eaba68fc200b7d97, type: 3}
-    - time: 0.28333333
+    - time: 0.25
       value: {fileID: 21300000, guid: 30817ce1c4338a147817d7338bb3f8b1, type: 3}
-    - time: 0.55
+    - time: 0.53333336
       value: {fileID: 21300000, guid: 4b1b49672f7be0d4292ec4809fb8172f, type: 3}
-    - time: 0.8333333
+    - time: 0.8
       value: {fileID: 21300000, guid: a18d71d1009b46d4bbbe44e1e73de812, type: 3}
-    - time: 1.1
+    - time: 1.0833334
       value: {fileID: 21300000, guid: c0af67f12c8cde647939874d247e1db0, type: 3}
     - time: 1.3333334
       value: {fileID: 21300000, guid: b2db8d7a6bc9a694eaba68fc200b7d97, type: 3}

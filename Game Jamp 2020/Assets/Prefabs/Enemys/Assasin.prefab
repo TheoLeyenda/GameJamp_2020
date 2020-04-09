@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3474617247551128464}
   - component: {fileID: 3474617247551128477}
   - component: {fileID: 3474617247551128476}
+  - component: {fileID: -8994445579078969718}
   m_Layer: 0
   m_Name: Assasin
   m_TagString: Enemy
@@ -99,7 +100,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -120,8 +121,10 @@ MonoBehaviour:
   speedMovement: 4
   speedJump: 0
   life: 1
+  inFloor: 0
   rig2D: {fileID: 0}
   RunVelocity: 0
+  timeDelayStune: 0
   Damage: 70
   distanceAttack: 1.2
   distanceChase: 5
@@ -133,7 +136,10 @@ MonoBehaviour:
   DropItem: {fileID: 8141553130086071884, guid: 7ddc306323023304f890588544635e97,
     type: 3}
   generatorCadaver: {fileID: 3977543859737699668}
+  stateEnemy: 0
   stateMovement: 0
+  animator: {fileID: -8994445579078969718}
+  evitarTrampas: 0
   delayAssesin: 0.1
   delayActivateMina: 0.2
   normalAttackDelay: 1
@@ -170,6 +176,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!95 &-8994445579078969718
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474617247551128465}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f2b9ed4890b5c1e468072de873df3a4f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3977543859737699668
 GameObject:
   m_ObjectHideFlags: 0

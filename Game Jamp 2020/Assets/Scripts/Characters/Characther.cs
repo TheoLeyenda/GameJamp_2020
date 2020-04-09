@@ -17,7 +17,7 @@ public class Characther : MonoBehaviour
     public Rigidbody2D rig2D;
     public float RunVelocity;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         rig2D = GetComponent<Rigidbody2D>();
         inFloor = false;
@@ -29,6 +29,13 @@ public class Characther : MonoBehaviour
         if (life <= 0)
         {
             die = true;
+        }
+    }
+    public void CheckLife(float maxLife)
+    {
+        if(life >= maxLife)
+        {
+            life = maxLife;
         }
     }
     public void LeftMovement(bool runMovement)

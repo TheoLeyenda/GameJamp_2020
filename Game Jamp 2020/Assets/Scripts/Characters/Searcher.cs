@@ -29,8 +29,9 @@ public class Searcher : Enemy
         left,
         right,
     }
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         GameObject go = GameObject.Find("Player");
         player = go.GetComponent<Player>();
     }
@@ -38,6 +39,7 @@ public class Searcher : Enemy
     // Update is called once per frame
     protected override void Update()
     {
+        CheckStateEnemy();
         CheckDead();
         if (stateEnemy != StateEnemy.Stunt)
         {
@@ -54,6 +56,8 @@ public class Searcher : Enemy
         else
         {
             //ANIMACION STUNE
+            animator.Play("Stune");
+            animator.SetBool("Idle", false);
         }
     }
     public void CheckPlayerInRange()

@@ -52,14 +52,16 @@ public class Shoker : Enemy
 
         source = GetComponent<AudioSource>();
     }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         GameObject go = GameObject.Find("Player");
         player = go.GetComponent<Player>();
     }
     // Update is called once per frame
     protected override void Update()
     {
+        CheckStateEnemy();
         CheckDead();
         if (stateEnemy != StateEnemy.Stunt)
         {
@@ -98,6 +100,8 @@ public class Shoker : Enemy
         else
         {
             //ANIMACION STUNE
+            animator.Play("Stune");
+            animator.SetBool("Idle", false);
         }
     }
     public void Chase()

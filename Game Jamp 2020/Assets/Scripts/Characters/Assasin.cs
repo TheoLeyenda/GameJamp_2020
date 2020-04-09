@@ -35,8 +35,9 @@ public class Assasin : Enemy
     {
         source = GetComponent<AudioSource>();
     }
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         GameObject go = GameObject.Find("Player");
         player = go.GetComponent<Player>();
         auxSpeedMovement = speedMovement;
@@ -44,6 +45,7 @@ public class Assasin : Enemy
     }
     protected override void Update()
     {
+        CheckStateEnemy();
         CheckDead();
         if (stateEnemy != StateEnemy.Stunt)
         {
@@ -65,6 +67,8 @@ public class Assasin : Enemy
         else
         {
             //ANIMACION STUNE
+            animator.Play("Stune");
+            animator.SetBool("Idle", false);
         }
     }
     public void ChasePlayer()

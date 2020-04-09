@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 3108214362128805397}
   - component: {fileID: 7198470581302566612}
   - component: {fileID: 7198470581302566610}
+  - component: {fileID: -1068830463572589983}
   m_Layer: 0
   m_Name: Shoker
   m_TagString: Enemy
@@ -176,8 +177,10 @@ MonoBehaviour:
   speedMovement: 5
   speedJump: 3
   life: 100
+  inFloor: 0
   rig2D: {fileID: 0}
   RunVelocity: 8
+  timeDelayStune: 0
   Damage: 75
   distanceAttack: 1.5
   distanceChase: 6
@@ -189,8 +192,29 @@ MonoBehaviour:
   DropItem: {fileID: 6882612640379575796, guid: c86b2fd0b482ae4449e8aca96397c188,
     type: 3}
   generatorCadaver: {fileID: 2669788400307608137}
+  stateEnemy: 0
   stateMovement: 0
+  animator: {fileID: -1068830463572589983}
   delayAttack: 3
   auxDelayAttack: 3
   doneDamage: {fileID: 0}
   reciveDamage: {fileID: 0}
+--- !u!95 &-1068830463572589983
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3108214362128805394}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dadd111eb5679b44088d16f6cf71674b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

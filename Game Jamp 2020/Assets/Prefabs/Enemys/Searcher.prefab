@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 2039494969641883459}
   - component: {fileID: 2039494969641883458}
   - component: {fileID: 2039494969641883461}
+  - component: {fileID: 286016334865855692}
   m_Layer: 0
   m_Name: Searcher
   m_TagString: Enemy
@@ -159,6 +160,7 @@ MonoBehaviour:
   inFloor: 0
   rig2D: {fileID: 0}
   RunVelocity: 0
+  timeDelayStune: 0
   Damage: 120
   distanceAttack: 6
   distanceChase: 0
@@ -170,7 +172,9 @@ MonoBehaviour:
   DropItem: {fileID: 4155637654985913388, guid: a676f30a2dae9b14495fb61b2e32b2c9,
     type: 3}
   generatorCadaver: {fileID: 370438286141547197}
+  stateEnemy: 0
   stateMovement: 0
+  animator: {fileID: 286016334865855692}
   delayShoot: 1.5
   auxDelayShoot: 1.5
   originalPrefabBullet: {fileID: 6491069370084027969, guid: d42b24c5db84c7943b8c22d5c357bc69,
@@ -200,6 +204,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
+--- !u!95 &286016334865855692
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039494969641883486}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d0fc6d5b549a14e4681038c0b57930cb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2039494971627814923
 GameObject:
   m_ObjectHideFlags: 0
