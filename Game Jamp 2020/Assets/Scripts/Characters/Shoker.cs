@@ -76,7 +76,6 @@ public class Shoker : Enemy
                     break;
                 case (int)States.Chase:
                     checkDirection = false;
-
                     //Debug.Log("Chase");
                     Chase();
                     break;
@@ -131,6 +130,7 @@ public class Shoker : Enemy
         {
             player.timeDelayStune = delayAttack + 1;
             player.statePlayer = Player.StatePlayer.Stunt;
+            player.enableEventStunt = true;
             fsm.SendEvent((int)Events.ReadyToAttack);
             player.life = player.life - Damage;
             playerScape = false;

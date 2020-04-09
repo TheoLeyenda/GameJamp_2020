@@ -142,10 +142,12 @@ public class Enemy : Characther
         }
         timeMovement = auxTimeMovement;
     }
-    public void CheckDead()
+    public override void CheckDead()
     {
         if (life <= 0)
         {
+            //Debug.Log("Entre");
+            die = true;
             Instantiate(DropItem, new Vector3(transform.position.x, generatorCadaver.transform.position.y,transform.position.z), Quaternion.identity, null);
             Destroy(this.gameObject);
         }

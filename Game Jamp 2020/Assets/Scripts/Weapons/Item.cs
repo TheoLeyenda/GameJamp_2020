@@ -12,6 +12,6 @@ public class Item : MonoBehaviour
         RifleTracker,
         SableAssasin,
     }
-    public int lifeRecover;
+    public float lifeRecover;
     public TypeItem typeItem;
 }

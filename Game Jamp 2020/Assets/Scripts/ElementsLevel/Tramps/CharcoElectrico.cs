@@ -88,6 +88,7 @@ public class CharcoElectrico : MonoBehaviour
             p.statePlayer = Player.StatePlayer.Stunt;
             p.life = p.life - damage;
             inStuned = true;
+            p.enableEventStunt = false;
         }
         if (damageEnemy)
         {

@@ -75,6 +75,7 @@ public class Player : Characther
     private bool isAttacking;
 
     private bool enableMovement;
+    public bool enableEventStunt;
     private HealthBar healthBar;
     private enum Direction
     {
@@ -171,7 +172,6 @@ public class Player : Characther
                 switch (equipedWeapon)
                 {
                     case EquipedWeapon.Default:
-
                         DefaultWeapon.gameObject.SetActive(true);
                         BrazosDeShokerWeapon.gameObject.SetActive(false);
                         SableAssasinWeapon.gameObject.SetActive(false);
@@ -184,7 +184,6 @@ public class Player : Characther
                         BrazosDeShokerWeapon.gameObject.SetActive(true);
                         SableAssasinWeapon.gameObject.SetActive(false);
                         RifleTrackerWeapon.gameObject.SetActive(false);
-
                         distaceWeapon = null;
                         currentWeapon = BrazosDeShokerWeapon;
                         break;
@@ -193,7 +192,6 @@ public class Player : Characther
                         BrazosDeShokerWeapon.gameObject.SetActive(false);
                         SableAssasinWeapon.gameObject.SetActive(true);
                         RifleTrackerWeapon.gameObject.SetActive(false);
-
                         distaceWeapon = null;
                         currentWeapon = SableAssasinWeapon;
                         break;
@@ -202,7 +200,6 @@ public class Player : Characther
                         BrazosDeShokerWeapon.gameObject.SetActive(false);
                         SableAssasinWeapon.gameObject.SetActive(false);
                         RifleTrackerWeapon.gameObject.SetActive(true);
-
                         currentWeapon = RifleTrackerWeapon;
                         distaceWeapon = RifleTrackerWeapon;
                         break;
@@ -231,7 +228,8 @@ public class Player : Characther
             }
             else if (timeDelayStune <= 0)
             {
-                statePlayer = StatePlayer.none;   
+                statePlayer = StatePlayer.none;
+                enableEventStunt = false;
             }
         }
     }
@@ -337,7 +335,7 @@ public class Player : Characther
             }
             else
             {
-                if (Input.GetKeyDown(keyAccion))
+                if (Input.GetKeyDown(keyAccion) && enableEventStunt)
                 {
                     //Debug.Log(timeDelayStune);
                     timeDelayStune = timeDelayStune - substractTimeStune;
@@ -551,19 +549,22 @@ public class Player : Characther
             switch (currentItem.typeItem)
             {
                 case Item.TypeItem.BrazoDeShoker:
-                    
+                    life = life + currentItem.lifeRecover;
                     equipedWeapon = EquipedWeapon.BrazoDeShoker;
                     Destroy(currentItem.gameObject);
                     break;
                 case Item.TypeItem.Default:
+                    life = life + currentItem.lifeRecover;
                     equipedWeapon = EquipedWeapon.Default;
                     Destroy(currentItem.gameObject);
                     break;
                 case Item.TypeItem.RifleTracker:
+                    life = life + currentItem.lifeRecover;
                     equipedWeapon = EquipedWeapon.RifleTracker;
                     Destroy(currentItem.gameObject);
                     break;
                 case Item.TypeItem.SableAssasin:
+                    life = life + currentItem.lifeRecover;
                     equipedWeapon = EquipedWeapon.SableAssasin;
                     Destroy(currentItem.gameObject);
                     break;

@@ -24,7 +24,7 @@ public class Characther : MonoBehaviour
         die = false;
         auxSpeedMovement = speedMovement;
     }
-    public void CheckDead()
+    public virtual void CheckDead()
     {
         if (life <= 0)
         {
