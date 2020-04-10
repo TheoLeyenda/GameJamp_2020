@@ -109,7 +109,7 @@ public class Enemy : Characther
         {
             if (!evitarTrampas)
             {
-                if (raycastHit.collider.tag != "Floor" && raycastHit.collider.tag != "CharcoElectrico" && raycastHit.collider.tag != "Mine")
+                if (raycastHit.collider.tag != "Floor" && raycastHit.collider.tag != "CharcoElectrico" && raycastHit.collider.tag != "Mine" && raycastHit.collider.tag != "Laser")
                 {
                     ChageDirection();
                 }

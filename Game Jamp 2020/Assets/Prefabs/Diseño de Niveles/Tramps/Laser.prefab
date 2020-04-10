@@ -212,6 +212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd10f6902a9f844dabbe6048ea08c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayPrendido: 3
+  delayApagado: 3
+  animator: {fileID: 1306766909792111301}
+  damageEnemy: 1
 --- !u!50 &1306766909792111302
 Rigidbody2D:
   serializedVersion: 4
@@ -232,7 +236,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!95 &1306766909792111301
 Animator:
   serializedVersion: 3
