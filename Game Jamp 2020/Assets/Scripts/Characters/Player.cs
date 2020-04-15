@@ -139,10 +139,8 @@ public class Player : Characther
     // Update is called once per frame
     void Update()
     {
-        //if (!inLadder)
-        //{
-            //rigidbody.gravityScale = auxGravityScaler;
-        //}
+        Debug.Log(inFloor);
+        
         CheckHealling();
         CheckLife(maxLife);
         if (enableMovement)
@@ -265,6 +263,10 @@ public class Player : Characther
     }
     public override void Movement()
     {
+        if (inLadder)
+        {
+            jumping = false;
+        }
         if (enableMovement)
         {
             //float vertical = Input.GetAxis("Vertical");
@@ -531,14 +533,6 @@ public class Player : Characther
         }
         
     }
-    private void oncollisionenter2d(Collision2D collision)
-    {
-        /*if (collision.gameObject.tag == "Floor")
-        {
-            this.jumping = false;
-        }*/
-
-    }
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Floor")
@@ -633,6 +627,8 @@ public class Player : Characther
         if (collision.tag == "Escalera")
         {
             inLadder = false;
+            inFloor = true;
+            animator.Play("Player_idle");
         }
     }
     public void update_life_bar()
@@ -678,7 +674,7 @@ public class Player : Characther
             animator.SetBool("isStunned", false);
         }
         */
-        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && this.jumping || topHigh)
+        if ((this.animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && this.jumping || topHigh) && !inFloor)
         {
             //this.jumping = false;
             this.topHigh = true;
