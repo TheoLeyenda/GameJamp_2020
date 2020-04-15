@@ -48,6 +48,8 @@ public class Player : Characther
 
     private int timeStartDashing;
 
+    private bool inLadder;
+
     [Header("Armas Melee")]
     public MeleeWeapon DefaultWeapon;
     public MeleeWeapon BrazosDeShokerWeapon;
