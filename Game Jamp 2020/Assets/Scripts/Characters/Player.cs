@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Characther
 {
     // Start is called before the first frame update
+    //public float auxGravityScaler = 2;
     public static Player instancePlayer;
     public float timeDelayStune;
     public float jampDivide;
@@ -124,6 +125,7 @@ public class Player : Characther
     protected override void Start()
     {
         base.Start();
+        inLadder = false;
         rigidbody = GetComponent<Rigidbody2D>();
         equipedWeapon = EquipedWeapon.Default;
         healthBar = GameObject.FindWithTag("HealthBar").GetComponent<HealthBar>();
@@ -137,6 +139,10 @@ public class Player : Characther
     // Update is called once per frame
     void Update()
     {
+        //if (!inLadder)
+        //{
+            //rigidbody.gravityScale = auxGravityScaler;
+        //}
         CheckHealling();
         CheckLife(maxLife);
         if (enableMovement)
@@ -321,14 +327,14 @@ public class Player : Characther
                     this.inMovement = false;
                 }
 
-                if (Input.GetKeyDown(JumpMovement) && inFloor)
+                if (Input.GetKeyDown(JumpMovement) && inFloor && !inLadder)
                 {
                     rigidbody.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
                     speedMovement = speedMovement / jampDivide;
                     inFloor = false;
                     //Debug.Log("Up");
                 }
-                else if (inFloor && !Input.GetKeyDown(JumpMovement))
+                else if (inFloor && !Input.GetKeyDown(JumpMovement) && !inLadder)
                 {
                     speedMovement = auxSpeedMovement;
                 }
@@ -351,7 +357,7 @@ public class Player : Characther
 
     private void chekMovementForAnimation()
     {
-        if(Input.GetKeyDown(JumpMovement) && inFloor)
+        if(Input.GetKeyDown(JumpMovement) && inFloor && !inLadder)
         {
             this.jumping = true;
             animator.SetTrigger("Jump");
@@ -398,7 +404,7 @@ public class Player : Characther
             {
                 RightMovement(false);
             }
-            else if (Input.GetKeyDown(JumpMovement))
+            else if (Input.GetKeyDown(JumpMovement) && !inLadder)
             {
                 this.jumping = true;
                 animator.SetTrigger("Jump");
@@ -436,7 +442,7 @@ public class Player : Characther
             {
                 LeftMovement(false);
             }
-            else if (Input.GetKeyDown(JumpMovement))
+            else if (Input.GetKeyDown(JumpMovement) && !inLadder)
             {
                 this.jumping = true;
                 animator.SetTrigger("Jump");
@@ -576,12 +582,13 @@ public class Player : Characther
             }
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        //si resivo daño de algun tipo con proyectil o trampa que ejecute la animacion de daño.
-    }
+    
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision.tag == "Escalera")
+        {
+            inLadder = true;
+        }
         if (collision.tag == "Item")
         {
             currentItem = collision.GetComponent<Item>();
@@ -609,11 +616,23 @@ public class Player : Characther
             }
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Escalera")
+        {
+            inLadder = true;
+        }
+        //si resivo daño de algun tipo con proyectil o trampa que ejecute la animacion de daño.
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Item")
         {
             currentItem = null;
+        }
+        if (collision.tag == "Escalera")
+        {
+            inLadder = false;
         }
     }
     public void update_life_bar()
