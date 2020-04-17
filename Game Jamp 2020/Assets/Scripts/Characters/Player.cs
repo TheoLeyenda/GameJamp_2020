@@ -139,7 +139,7 @@ public class Player : Characther
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(inFloor);
+        //Debug.Log(inFloor);
         
         CheckHealling();
         CheckLife(maxLife);

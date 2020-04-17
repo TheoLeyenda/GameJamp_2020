@@ -60,36 +60,39 @@ public class Enemy : Characther
     
     public override void Movement()
     {
-        if (normalMovement)
+        if (enableMovement)
         {
-            switch (stateMovement)
+            if (normalMovement)
             {
-                case StateMovement.Left:
-                    LeftMovement(false);
-                    break;
-                case StateMovement.Right:
-                    RightMovement(false);
-                    break;
-                case StateMovement.Jump:
-                    if (stateMovement == StateMovement.Left)
-                    {
-                        float auxSpeed = speedMovement = speedMovement / 2f;
-                        transform.position = transform.position + new Vector3(auxSpeed, 0, 0) * Time.deltaTime;
-                        transform.eulerAngles = new Vector3(0, 0, 0);
-                        rig2D.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
-                    }
-                    else if (stateMovement == StateMovement.Right)
-                    {
-                        float auxSpeed = speedMovement = speedMovement / 2f;
-                        transform.position = transform.position - new Vector3(auxSpeed, 0, 0) * Time.deltaTime;
-                        rig2D.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
-                        transform.eulerAngles = new Vector3(0, 180, 0);
-                    }
-                    break;
-            }
-            if (checkDirection)
-            {
-                CheckDirection();
+                switch (stateMovement)
+                {
+                    case StateMovement.Left:
+                        LeftMovement(false);
+                        break;
+                    case StateMovement.Right:
+                        RightMovement(false);
+                        break;
+                    case StateMovement.Jump:
+                        if (stateMovement == StateMovement.Left)
+                        {
+                            float auxSpeed = speedMovement = speedMovement / 2f;
+                            transform.position = transform.position + new Vector3(auxSpeed, 0, 0) * Time.deltaTime;
+                            transform.eulerAngles = new Vector3(0, 0, 0);
+                            rig2D.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
+                        }
+                        else if (stateMovement == StateMovement.Right)
+                        {
+                            float auxSpeed = speedMovement = speedMovement / 2f;
+                            transform.position = transform.position - new Vector3(auxSpeed, 0, 0) * Time.deltaTime;
+                            rig2D.AddForce(Vector2.up * speedJump, ForceMode2D.Impulse);
+                            transform.eulerAngles = new Vector3(0, 180, 0);
+                        }
+                        break;
+                }
+                if (checkDirection)
+                {
+                    CheckDirection();
+                }
             }
         }
     }

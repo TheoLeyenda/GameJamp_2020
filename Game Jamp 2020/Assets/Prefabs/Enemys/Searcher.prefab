@@ -167,7 +167,7 @@ MonoBehaviour:
   timeMovement: 3
   auxTimeMovement: 3
   distaceDectectedFloor: 5
-  enableMovement: 1
+  enableMovement: 0
   distaceY: 0.5
   DropItem: {fileID: 4155637654985913388, guid: a676f30a2dae9b14495fb61b2e32b2c9,
     type: 3}
@@ -175,6 +175,7 @@ MonoBehaviour:
   stateEnemy: 0
   stateMovement: 0
   animator: {fileID: 286016334865855692}
+  evitarTrampas: 0
   delayShoot: 1.5
   auxDelayShoot: 1.5
   originalPrefabBullet: {fileID: 6491069370084027969, guid: d42b24c5db84c7943b8c22d5c357bc69,
